@@ -3,7 +3,7 @@ public:
     unordered_set<int>st;
     RandomizedSet() {
        // unordered_set<int>st;
-        st.clear();
+        // st.clear();
     }
     
     bool insert(int val) {
