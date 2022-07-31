@@ -12,7 +12,6 @@ public:
         grid[0][0] = 1;
         
         int rad = 1;
-        int lastrow, lastcolum;
         while(que.size()){
             int sz = que.size();
             
@@ -25,7 +24,6 @@ public:
                     return rad;
                 
                 for(auto &[dr,dc]:dir){
-                    lastrow = x, lastcolum = y;
                     if(x+dr < 0 or x+dr == n or y+dc < 0 or y+dc == n or grid[x+dr][y+dc] == 1)
                         continue;
                     grid[x+dr][y+dc] = 1; //. if i use here it dont give me tle
@@ -34,8 +32,6 @@ public:
             }
             rad++; // 1 2
         }
-        if(lastrow != n-1 or lastcolum != n-1)
-            return -1;
-        return rad;
+        return -1;
     }
 };
