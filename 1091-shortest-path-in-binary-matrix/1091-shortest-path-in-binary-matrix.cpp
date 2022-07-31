@@ -9,6 +9,7 @@ public:
         
         queue<pair<int,int>>que;
         que.push({0,0});
+        grid[0][0] = 1;
         
         int rad = 1;
         int lastrow, lastcolum;
@@ -19,7 +20,7 @@ public:
                 auto par = que.front();
                 que.pop();
                 int x = par.first, y = par.second;
-                // grid[x][y] = 1;
+                // grid[x][y] = 1; //if i use it here it give me tle
                 if(x == n-1 and y == n-1)
                     return rad;
                 
@@ -27,7 +28,7 @@ public:
                     lastrow = x, lastcolum = y;
                     if(x+dr < 0 or x+dr == n or y+dc < 0 or y+dc == n or grid[x+dr][y+dc] == 1)
                         continue;
-                    grid[x+dr][y+dc] = 1;
+                    grid[x+dr][y+dc] = 1; //. if i use here it dont give me tle
                     que.push({x+dr,y+dc});
                 }
             }
