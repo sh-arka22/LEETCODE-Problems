@@ -8,9 +8,7 @@ public:
             indeg[v[1] - 1]++;
         }
         
-        int rad = 0, studied = 0;
         queue<int>que;
-        
         for(int i=0;i<N;i++){
             if(indeg[i]==0)
                 que.push(i);
@@ -18,12 +16,14 @@ public:
     /**
      * traversing the graph
      */
-        vector<int>topoSort;
+        vector<vector<int>>semister;
+        int rad = 0, studied = 0;
         while(que.size()){
             int sz = que.size();
+            vector<int>subjects;
             while(sz--){
                 int v = que.front();
-                topoSort.push_back(v);
+                subjects.push_back(v);
                 que.pop();
                 studied++;
                 for(auto child:g[v]){
@@ -33,8 +33,17 @@ public:
                     }
                 }
             }
+            semister.push_back(subjects);
             rad ++;
         }
+        for(auto v:semister){
+            for(auto vv:v){
+                cout<<vv<<" ";
+            }
+            cout<<endl;
+        }
+        
+        
         /**
          * if the size of the topoSorted array != the no of vertex so there is a cycle hence cannot be toposorted here
          */
