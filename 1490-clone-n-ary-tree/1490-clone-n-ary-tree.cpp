@@ -38,7 +38,7 @@ public:
             while(sz--){
                 auto top = que.front(); que.pop();
                 Node *node = new Node(top.Old->val);
-                if(top.New == NULL){
+                if(copy == NULL){
                     copy = node;
                 }
                 else if(top.New){
