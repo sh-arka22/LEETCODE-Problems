@@ -40,16 +40,6 @@ public:
         }
         level.push_back(safeNodes);
     }
-// 	while(q.size()) {
-// 		int node = q.front(); q.pop();
-
-// 		safeNodes.push_back(node);
-
-// 		for(auto& adjnode : adj[node]) {
-// 			if(--indegree[adjnode] == 0) q.push(adjnode);
-// 		}
-// 	}
-    // reverse(safeNodes.begin(), safeNodes.end());
         for(auto v:level){
             for(auto vv:v){
                 cout<<vv<<" ";
