@@ -12,7 +12,6 @@ public:
             for (auto ch: s) {
                 countA += (ch == a); //1
                 countB += (ch == b); //1
-                // cout<<countA<<ch<<countB<<endl;
                 if (countA - countB < 0) {
                     countA = 0;
                     countB = 0;
