@@ -15,10 +15,9 @@ public:
             }
         }
         
-        int rad = 0;
+        int rad = 1;
         while(que.size()){
             int sz = que.size();
-            rad++;
             while(sz--){
                 auto top = que.front(); que.pop();
                 int r = top.first, c = top.second;
@@ -31,6 +30,7 @@ public:
                     }
                 }
             }
+            rad++;
         }
         return -1;
     }
