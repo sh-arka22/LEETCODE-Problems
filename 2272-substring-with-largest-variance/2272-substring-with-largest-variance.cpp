@@ -17,7 +17,7 @@ public:
                     countB = 0;
                 }
                 // cout<<ch<<total<<" ";
-                total = max(total, countB > 0 ? countA - countB : countA - countB - 1);
+                total = max(total, countB <= 0 ? countA - countB - 1 : countA - countB);
                 
             }
         }
