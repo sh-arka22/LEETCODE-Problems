@@ -1,49 +1,35 @@
 class Solution {
 public:
-    vector<int> findOrder(int numCourses, vector<vector<int>>& edge) {
-        int v = numCourses, e = edge.size();
-        
-        vector<int> graph [v];
-        for(int i=0;i<e;i++){
-            graph[edge[i][1]].push_back(edge[i][0]);
+    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+        int v = numCourses;
+        int indeg[v];
+        fill(indeg, indeg+v, 0);
+        vector<int>graph[v];
+        for(vector<int>edge:prerequisites){
+            indeg[edge[0]]++;
+            graph[edge[1]].push_back(edge[0]);
         }
         
-        int indeg [v];
-        fill(indeg,indeg+v,0);
+        queue<int>que;
         
-        vector<int>topoSort;
-        
-        for(auto edgeList: graph){
-            for(auto u: edgeList){
-                indeg[u]++;
-            }
-        }
-        
-        queue<int> que;
         for(int i=0;i<v;i++){
-            if(indeg[i] == 0){
-                que.push(i);
-            }
+            if(indeg[i] == 0) que.push(i);
         }
-        int level = 0;
+        vector<int>processed;
+        
         while(que.size()){
             int sz = que.size();
             while(sz--){
-                int v = que.front();
-                topoSort.push_back(v);
+                int top = que.front();
                 que.pop();
-                for(auto child:graph[v]){
-                    if(--indeg[child] == 0){
+                processed.push_back(top);
+                for(auto child: graph[top]){
+                    if(--indeg[child] == 0)
                         que.push(child);
-                    }
                 }
             }
-            level ++;
         }
-        // reverse(topoSort.begin(), topoSort.end());
-        if(topoSort.size() == v){
-            return topoSort;
-        }
+        if(processed.size() == v)  return processed ;
         return {};
     }
 };
