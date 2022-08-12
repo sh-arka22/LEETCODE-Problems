@@ -5,7 +5,7 @@ public:
         
         vector<int> graph [v];
         for(int i=0;i<e;i++){
-            graph[edge[i][0]].push_back(edge[i][1]);
+            graph[edge[i][1]].push_back(edge[i][0]);
         }
         
         int indeg [v];
@@ -40,7 +40,7 @@ public:
             }
             level ++;
         }
-        reverse(topoSort.begin(), topoSort.end());
+        // reverse(topoSort.begin(), topoSort.end());
         if(topoSort.size() == v){
             return topoSort;
         }
