@@ -1,5 +1,6 @@
 class Solution {
 public:
+    //sorting + unionfind = khruskal algo
     const static int N = 1e4;
     int parr[N];
     int findParr(int v){
@@ -35,7 +36,7 @@ public:
                 cost += w;
                 noOfEdges++;
             }
-            // if(noOfEdges >= v) break;
+            if(noOfEdges >= v) break;
         }
         return cost;
     }
