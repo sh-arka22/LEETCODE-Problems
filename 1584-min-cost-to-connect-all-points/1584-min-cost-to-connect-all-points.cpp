@@ -35,7 +35,7 @@ public:
                 cost += w;
                 noOfEdges++;
             }
-            if(noOfEdges >= v) break;
+            // if(noOfEdges >= v) break;
         }
         return cost;
     }
