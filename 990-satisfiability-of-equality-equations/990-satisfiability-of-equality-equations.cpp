@@ -12,7 +12,10 @@ public:
             if(s[1] == '='){
                 int p1 = findParr(s[0] - 'a');
                 int p2 = findParr(s[3] - 'a');
-                if(p1 != p2) parr[p1] = p2;
+                if(p1 != p2){
+                    parr[p1] = min(p1,p2);
+                    parr[p2] = min(p1,p2);
+                }
             }
             else{
                 
