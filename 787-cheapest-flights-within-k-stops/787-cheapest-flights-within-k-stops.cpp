@@ -11,8 +11,17 @@ public:
         while(st.size()){
             auto[wsf, parr, stops] = *st.begin();
             st.erase(st.begin());
+            
+            /**
+            Added extra
+            */
             if(parr == dst) return wsf;
             if(!stops) continue;
+            
+            /**
+            Not required vis bcs it is directed graph
+            */
+            
             for(auto &[u,w]:graph[parr]) st.insert(make_tuple(wsf+w,u,stops-1));
         }
         return -1;
