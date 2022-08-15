@@ -25,7 +25,7 @@ public:
             for(auto child: graph[parr]){
                 if(dis[child.first] > dis[parr] + child.second){
                     dis[child.first] = dis[parr] + child.second;
-                    st.insert({dis[child.first], child.first});
+                    st.insert({child.second, child.first});
                 }
             }
         }
