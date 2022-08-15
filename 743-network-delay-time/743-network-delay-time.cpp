@@ -1,9 +1,5 @@
-static const auto fastIO = []() {
-ios_base::sync_with_stdio(false);
-cin.tie(0);
-cout.tie(0);
-return 0;
-}();
+static bool     _foo = ios::sync_with_stdio(false);
+static ostream* _bar = cin.tie(NULL);
 class Solution {
 public:
     //optimidsed version
