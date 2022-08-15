@@ -5,6 +5,7 @@ public:
     vector<pair<int,int>>graph[N];
     set<pair<int,int>>st; //{wsf,v};
     int networkDelayTime(vector<vector<int>>& times, int n, int k) {
+        vector<int>dis(1e3,INT_MAX);
         fill(vis,vis+N, -1);
         int e = times.size();
         for(int i=0;i<e;i++){
@@ -14,21 +15,24 @@ public:
         }
         
         st.insert({0,k});
-        int maxi = INT_MIN;
+        dis[k] = 0;
+        int maxi = 0;
         while(st.size()){
             auto node = *st.begin();
             int parr = node.second;
             int time = node.first;
             st.erase(st.begin());
-            if(vis[parr] == 1) continue; //cycle prasent;
-            vis[parr] = 1;
-            maxi = max(maxi, time);
             for(auto child: graph[parr]){
-                st.insert({time+child.second, child.first});
+                if(dis[child.first] > dis[parr] + child.second){
+                    dis[child.first] = dis[parr] + child.second;
+                    st.insert({dis[child.first], child.first});
+                }
             }
         }
+        
         for(int i=1;i<=n;i++){
-            if(vis[i] == -1) return -1;
+            if(dis[i] == INT_MAX) return -1;
+            maxi = max(maxi,dis[i]);
         }
         return maxi;
     }
