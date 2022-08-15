@@ -1,12 +1,11 @@
 class Solution {
 public:
+    //optimidsed version
     const static int N = 1e3;
-    int vis[N];
     vector<pair<int,int>>graph[N];
-    set<pair<int,int>>st; //{wsf,v};
+    set<pair<int,int>>st; //{w,v};
     int networkDelayTime(vector<vector<int>>& times, int n, int k) {
         vector<int>dis(1e3,INT_MAX);
-        fill(vis,vis+N, -1);
         int e = times.size();
         for(int i=0;i<e;i++){
             vector<int>edge = times[i];
