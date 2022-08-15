@@ -22,10 +22,10 @@ public:
             st.erase(st.begin());
             if(vis[parr] == 1) continue; //cycle prasent;
             vis[parr] = 1;
+            maxi = max(maxi, time);
             for(auto child: graph[parr]){
                 st.insert({time+child.second, child.first});
             }
-            maxi = max(maxi, time);
         }
         for(int i=1;i<=n;i++){
             if(vis[i] == -1) return -1;
