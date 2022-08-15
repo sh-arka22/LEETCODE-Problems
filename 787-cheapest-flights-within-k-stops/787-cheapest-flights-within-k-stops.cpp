@@ -8,6 +8,8 @@ public:
         
         st.insert(make_tuple(0,src,k+1));
         
+        int mini = INT_MAX;
+        
         while(st.size()){
             auto[wsf, parr, stops] = *st.begin();
             st.erase(st.begin());
@@ -15,7 +17,7 @@ public:
             /**
             Added extra
             */
-            if(parr == dst) return wsf;
+            if(parr == dst) return mini = min(mini,wsf) ;
             if(!stops) continue;
             
             /**
@@ -24,6 +26,6 @@ public:
             
             for(auto &[u,w]:graph[parr]) st.insert(make_tuple(wsf+w,u,stops-1));
         }
-        return -1;
+        return mini == INT_MAX ? -1 : mini;
     }
 };
