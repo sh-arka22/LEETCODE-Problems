@@ -1,61 +1,38 @@
 class Solution {
 public:
-    // Adjacency list, defined it as per the maximum number of nodes
-    // But can be defined with the input size as well
-    vector<pair<int, int>> adj[101];
-    
-    void dijkstra(vector<int>& signalReceivedAt, int source, int n) {
-        priority_queue<pair<int, int>, vector<pair<int, int>>, 
-        greater<pair<int, int>>> pq;
-        pq.push({0, source});
+    //optimidsed version
+    const static int N = 1e3;
+    vector<pair<int,int>>graph[N];
+    set<pair<int,int>>st; //{w,v};
+    int networkDelayTime(vector<vector<int>>& times, int n, int k) {
+        vector<int>dis(1e3,INT_MAX);
+        int e = times.size();
+        for(int i=0;i<e;i++){
+            vector<int>edge = times[i];
+            int v = edge[0], u = edge[1], w = edge[2];
+            graph[v].push_back({u,w});
+        }
         
-        // Time for starting node is 0
-        signalReceivedAt[source] = 0;
-        
-        while (!pq.empty()) {
-            int currNodeTime = pq.top().first;
-            int currNode = pq.top().second; 
-            pq.pop();
-            
-            if (currNodeTime > signalReceivedAt[currNode]) {
-                continue;
-            }
-            
-            // Broadcast the signal to adjacent nodes
-            for (pair<int, int> edge : adj[currNode]) {
-                int time = edge.first;
-                int neighborNode = edge.second;
-                
-                // Fastest signal time for neighborNode so far
-                // signalReceivedAt[currNode] + time : 
-                // time when signal reaches neighborNode
-                if (signalReceivedAt[neighborNode] > currNodeTime + time) {
-                    signalReceivedAt[neighborNode] = currNodeTime + time;
-                    pq.push({signalReceivedAt[neighborNode], neighborNode});
+        st.insert({0,k});
+        dis[k] = 0;
+        int maxi = 0;
+        while(st.size()){
+            auto node = *st.begin();
+            int parr = node.second;
+            int time = node.first;
+            st.erase(st.begin());
+            for(auto child: graph[parr]){
+                if(dis[child.first] > dis[parr] + child.second){
+                    dis[child.first] = dis[parr] + child.second;
+                    st.insert({dis[child.first], child.first});
                 }
             }
         }
-    }
-    
-    int networkDelayTime(vector<vector<int>>& times, int n, int k) {
-        // Build the adjacency list
-        for (vector<int> time : times) {
-            int source = time[0];
-            int dest = time[1];
-            int travelTime = time[2];
-            
-            adj[source].push_back({travelTime, dest});
+        
+        for(int i=1;i<=n;i++){
+            if(dis[i] == INT_MAX) return -1;
+            maxi = max(maxi,dis[i]);
         }
-        
-        vector<int> signalReceivedAt(n + 1, INT_MAX);
-        dijkstra(signalReceivedAt, k, n);
-        
-        int answer = INT_MIN;
-        for (int i = 1; i <= n; i++) {
-            answer = max(answer, signalReceivedAt[i]);
-        }
-        
-        // INT_MAX signifies atleat one node is unreachable
-        return answer == INT_MAX ? -1 : answer;
+        return maxi;
     }
 };
