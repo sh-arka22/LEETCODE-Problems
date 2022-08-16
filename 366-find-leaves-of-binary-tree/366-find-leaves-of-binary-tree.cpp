@@ -17,6 +17,7 @@ public:
         int height = max(dfs(root->left), dfs(root->right))+1;
         if(height > ans.size()) ans.push_back({});
         ans[height-1].push_back(root->val);
+        root->left = root->right = NULL;
         return height;
     }
     vector<vector<int>> findLeaves(TreeNode* root) {
