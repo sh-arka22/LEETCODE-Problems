@@ -20,7 +20,7 @@ public:
                 if(wsf>dist[parr]) continue;
                 dist[parr]=wsf;
                 for(auto [child,w] : graph[parr]) {
-                    if(w+wsf > ans) continue;
+                    // if(w+wsf > ans) continue;
                     if(child==dst) ans=min(ans, w+wsf);
                     q.push({child, w+wsf});
                 }
