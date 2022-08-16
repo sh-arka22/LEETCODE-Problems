@@ -11,6 +11,7 @@ public:
         vector<int> dist(n, INT_MAX);
         queue<pair<int, int>> q;
         q.push({src, 0});
+        dist[src] = 0;
         int stops=1;
         while(!q.empty()) {
             int sz=q.size();
