@@ -1,7 +1,7 @@
 class Solution {
 public:
     
-    //BFS SOLUTION
+    //BFS SOLUTION O(e*k)
     int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
         vector<vector<pair<int, int>>> graph(n);
         for(auto e : flights) {
@@ -11,8 +11,8 @@ public:
         vector<int> dist(n, INT_MAX);
         queue<pair<int, int>> q;
         q.push({src, 0});
-        int stops=0;
-        while(stops<=k && !q.empty()) {
+        int stops=1;
+        while(!q.empty()) {
             int sz=q.size();
             while(sz--) {
                 auto [parr,wsf] = q.front();
@@ -25,7 +25,7 @@ public:
                     q.push({child, w+wsf});
                 }
             }
-            stops++;
+            if(stops++ > k) break;
         }
         if(ans==INT_MAX)
             return -1;
