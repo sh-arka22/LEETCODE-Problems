@@ -15,15 +15,14 @@ public:
         while(stops<=k && !q.empty()) {
             int sz=q.size();
             while(sz--) {
-                int cnode=q.front().first;
-                int cdist=q.front().second;
+                auto [parr,wsf] = q.front();
                 q.pop();
-                if(cdist>dist[cnode]) continue;
-                dist[cnode]=cdist;
-                for(auto e : graph[cnode]) {
-                    if(e.second+cdist>ans) continue;
-                    if(e.first==dst) ans=min(ans, e.second+cdist);
-                    q.push({e.first, e.second+cdist});
+                if(wsf>dist[parr]) continue;
+                dist[parr]=wsf;
+                for(auto [child,w] : graph[parr]) {
+                    if(w+wsf > ans) continue;
+                    if(child==dst) ans=min(ans, w+wsf);
+                    q.push({child, w+wsf});
                 }
             }
             stops++;
