@@ -17,10 +17,6 @@ public:
             /**
             Added extra
             */
-            // if(vis[parr]) continue;
-            // if(stops>=0)
-            //     vis[parr] = 1;
-            // else continue;
             
             if(parr == dst) return mini = min(mini,wsf) ;
             if(!stops) continue;
