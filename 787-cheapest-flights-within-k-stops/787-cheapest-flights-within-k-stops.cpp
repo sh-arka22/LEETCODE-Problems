@@ -1,34 +1,35 @@
 class Solution {
 public:
-    //WITHOUT DIJECTRAS
+    
+    //BFS SOLUTION
     int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
-       vector<vector<pair<int,int>>>graph(n);
-        for(const auto&f:flights)   graph[f[0]].push_back({f[1],f[2]});
-        
-        set<tuple<int,int,int>>st;
-        
-        st.insert(make_tuple(0,src,k+1));
-        vector<int>vis(n,0);
-        int mini = INT_MAX;
-        while(st.size()){
-            auto[wsf, parr, stops] = *st.begin();
-            st.erase(st.begin());
-            
-            /**
-            Added extra
-            */
-            
-            if(parr == dst) return mini = min(mini,wsf) ;
-            if(!stops) continue;
-            
-            /**
-            Not required vis bcs it is directed graph
-            */
-            
-            for(auto &[u,w]:graph[parr]){
-                st.insert(make_tuple(wsf+w,u,stops-1));
-            }
+        vector<vector<pair<int, int>>> graph(n);
+        for(auto e : flights) {
+            graph[e[0]].push_back({e[1], e[2]});
         }
-        return mini == INT_MAX ? -1 : mini;
+        int ans=INT_MAX;
+        vector<int> dist(n, INT_MAX);
+        queue<pair<int, int>> q;
+        q.push({src, 0});
+        int stops=0;
+        while(stops<=k && !q.empty()) {
+            int sz=q.size();
+            while(sz--) {
+                int cnode=q.front().first;
+                int cdist=q.front().second;
+                q.pop();
+                if(cdist>dist[cnode]) continue;
+                dist[cnode]=cdist;
+                for(auto e : graph[cnode]) {
+                    if(e.second+cdist>ans) continue;
+                    if(e.first==dst) ans=min(ans, e.second+cdist);
+                    q.push({e.first, e.second+cdist});
+                }
+            }
+            stops++;
+        }
+        if(ans==INT_MAX)
+            return -1;
+        return ans;
     }
 };
