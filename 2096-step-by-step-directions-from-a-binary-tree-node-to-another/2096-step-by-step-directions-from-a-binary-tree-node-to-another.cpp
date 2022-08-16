@@ -72,6 +72,9 @@ public:
         }
         
         reverse(res.begin(), res.end());
+        delete[]parrent;
+        delete[]vis;
+        delete[]dirArray;
         return res;
     }
 };
