@@ -43,6 +43,7 @@ public:
         Node *head = dummy->right;
         dummy->right = head->left = NULL;
         
+        //neded to added to make it circular
         head->left = prev;
         prev->right = head;
         
