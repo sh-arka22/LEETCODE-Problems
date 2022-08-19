@@ -21,6 +21,8 @@ public:
         int n = s.size();
         dp = new int[n+1];
         fill(dp,dp+n+1, -1);
-        return recc(s,n);
+        int ans = recc(s,n);
+        delete[] dp;
+        return ans;
     }
 };
