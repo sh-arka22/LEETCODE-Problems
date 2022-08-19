@@ -1,7 +1,7 @@
 class Solution {
 public:
     int *dp;
-    int tabulation(string s, int IDX){
+    const int tabulation(string s, int IDX){
     for(int idx=0; idx<=IDX; idx++){
         if(s[idx] == '0'){
             dp[idx] = 0;
