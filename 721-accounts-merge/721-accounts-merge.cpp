@@ -18,7 +18,7 @@ public:
                     emailId[accounts[i][j]] = i;
                 }
                 else{
-                    int p1 = findParr(i);
+                    int p1 = i;
                     int p2 = findParr(emailId[accounts[i][j]]);
                     parr[p2] = p1;
                 }
