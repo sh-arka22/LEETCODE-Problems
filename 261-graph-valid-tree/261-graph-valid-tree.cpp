@@ -6,8 +6,8 @@ class Solution {
         return v == parr[v] ? v : (parr[v] = findParr(parr[v]));
     }
     void union_(int p1, int p2){
-        if(size[p1]<size[p2]){
-            for(auto it: parr) cout<<it<<" ";
+        if(size[p1]>size[p2]){
+            // for(auto it: parr) cout<<it<<" ";
             parr[p2] = p1;
             size[p1] += size[p2];
             maxi = max(maxi,size[p1]);
