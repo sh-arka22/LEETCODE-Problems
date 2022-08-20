@@ -21,7 +21,7 @@ public:
              pq.erase(it);
              pq.erase(it2);
 
-             if(freq > 1){
+             if(freq >= 2){
                  t += mostfreq;
                  t += mostfreq;
                  freq -= 2;
@@ -37,7 +37,7 @@ public:
                  if(freq2 < freq){
                     t += nextfreq;
                     freq2 -= 1;
-                 }else{
+                 }else if(freq2 == freq){
                      t += nextfreq;
                      t += nextfreq;
                      freq2 -= 2;
