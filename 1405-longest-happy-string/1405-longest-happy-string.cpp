@@ -8,7 +8,7 @@ public:
          if(c > 0)pq.insert({c , 'c'});
 
          string t;
-         while(pq.size()>1){
+         while(pq.size()>=2){
 
              auto it = --pq.end();
              char mostfreq = it -> second;
