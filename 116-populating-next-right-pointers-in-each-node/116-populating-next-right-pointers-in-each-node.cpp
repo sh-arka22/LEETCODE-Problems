@@ -26,7 +26,8 @@ public:
         
         while(que.size()){
             int sz = que.size();
-            while(sz--){
+            while(sz){
+                sz--;
                 Node* top  = que.front();
                 que.pop();
                 
