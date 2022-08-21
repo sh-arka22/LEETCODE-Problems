@@ -4,7 +4,7 @@ public:
         queue<string> PendingNodes;
         PendingNodes.push(beginWord);
         int level = 0;
-        set<string> GivenWords;
+        unordered_set<string> GivenWords;
         for(auto x : wordList){
             GivenWords.insert(x);
         }
