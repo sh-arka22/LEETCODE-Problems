@@ -1,35 +1,36 @@
 class Solution {
 public:
     int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
-        queue<string> PendingNodes;
-        PendingNodes.push(beginWord);
-        int level = 0;
-        unordered_set<string> GivenWords;
-        for(auto x : wordList){
-            GivenWords.insert(x);
+        unordered_set<string> st;
+        
+        for(string str:wordList){
+            st.insert(str);
         }
         
-        while(!PendingNodes.empty()){
-            int size = PendingNodes.size();
-            while(size-->0){
-                string front = PendingNodes.front();
-                if(front == endWord){
-                    return level+1;
-                }
-                PendingNodes.pop();
-                string temp = front;
-                for(int i = 0 ; i < front.size() ; i++){
-                    for(char j = 'a' ; j <= 'z' ; j++){
-                        temp[i] = j;
-                        if((temp != front) && (GivenWords.find(temp) != GivenWords.end())){
-                            PendingNodes.push(temp);
-                            GivenWords.erase(temp);
+        queue<string>que;
+        que.push(beginWord);
+        
+        int rad = 0;
+        
+        while(que.size()){
+            int sz = que.size();
+            while(sz--){
+                string top = que.front();
+                que.pop();
+                if(top == endWord) return rad+1;
+                string tmp = top;
+                for(int i=0;i<tmp.size();i++){
+                    for(char ch = 'a'; ch<= 'z'; ch++){
+                        tmp[i] = ch;
+                        if(tmp != top and st.count(tmp)){
+                            que.push(tmp);
+                            st.erase(tmp);
                         }
                     }
-                    temp[i] = front[i];
+                    tmp[i] = top[i];
                 }
             }
-            level++;
+            rad++;
         }
         return 0;
     }
