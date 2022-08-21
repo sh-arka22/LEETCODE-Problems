@@ -27,7 +27,8 @@ public:
                             st.erase(tmp);
                         }
                     }
-                    tmp[i] = top[i];
+                    // tmp[i] = top[i];
+                    tmp = top;
                 }
             }
             rad++;
