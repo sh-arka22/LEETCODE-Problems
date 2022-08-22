@@ -6,10 +6,14 @@ public:
         
         vector<array<int, 3>>sorted;
         
-        for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){
-                sorted.push_back({grid[i][j], i, j});
-            }
+        // for(int i=0;i<n;i++){
+        //     for(int j=0;j<m;j++){
+        //         sorted.push_back({grid[i][j], i, j});
+        //     }
+        // }
+        for(int i=0;i<n*m;i++){
+            int r = i/m, c = i%m;
+            sorted.push_back({grid[r][c],r,c});
         }
         
         sort(begin(sorted), end(sorted));
