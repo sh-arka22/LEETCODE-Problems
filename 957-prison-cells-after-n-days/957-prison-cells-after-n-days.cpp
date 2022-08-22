@@ -7,7 +7,7 @@ public:
             for(int i = 1; i <= 6; i++){
                 cell[i] = cells[i-1] == cells[i+1];
             }
-            if(seen.size() and cell == seen.front()) return (seen[(n-1)%seen.size()]);
+            if(seen.size() and cell == seen[0]) return (seen[(n-1)%seen.size()]);
             else{
                 seen.push_back(cell);
             }
