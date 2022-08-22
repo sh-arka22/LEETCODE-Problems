@@ -8,19 +8,19 @@ public:
             int r = (ch-'a')/5, c = (ch-'a')%5;
             while(c !=j or r != i){
                 if(c>=j){
-                if(r>i){
-                    ans += 'D';
-                    i++;
-                }
-                else if(r<i){
-                    ans += 'U';
-                    i--;
-                }
-                else {
-                    ans += 'R';
-                    j++;
+                    if(r>i){
+                        ans += 'D';
+                        i++;
                     }
-                }
+                    else if(r<i){
+                        ans += 'U';
+                        i--;
+                    }
+                    else {
+                        ans += 'R';
+                        j++;
+                        }
+                    }
                 else{
                     ans += 'L';
                     j--;
