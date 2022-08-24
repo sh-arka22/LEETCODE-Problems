@@ -27,12 +27,14 @@ public:
                 if(pa1 != pa2){
                     aliceConnection--;
                     aliceParr[pa2] = pa1;
-                }
-                if(pb1 != pb2){
                     bobConnection--;
                     bobParr[pb2] = pb1;
                 }
-                if(pa1 == pa2){
+                // if(pb1 != pb2){
+                //     bobConnection--;
+                //     bobParr[pb2] = pb1;
+                // }
+                if(pa1 == pa2 or pb1 == pb2){
                     removed++;
                 }
             }
