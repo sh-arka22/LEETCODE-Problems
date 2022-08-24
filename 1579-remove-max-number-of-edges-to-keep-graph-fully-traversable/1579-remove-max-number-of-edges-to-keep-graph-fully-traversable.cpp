@@ -32,7 +32,7 @@ public:
                     bobConnection--;
                     bobParr[pb2] = pb1;
                 }
-                if(pa1 == pa2 or pb1 == pb2){
+                if(pa1 == pa2){
                     removed++;
                 }
             }
