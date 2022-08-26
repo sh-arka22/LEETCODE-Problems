@@ -1,50 +1,41 @@
 class Solution {
-    /*
-     0->1->3->5
-         \    |
-          4->7
-    */
-private:
-    int vis[100];
+public:
+    int vis[101];
     bool bfs(vector<vector<int>>& graph, int src){
         queue<int>que;
-        bool isCycle = false, isBipartite = true;
         que.push(src);
+        // vis[src] = 0;
+        //0->green 1->red;
         int clr = 0;
-        // -1->notcolored   0->green   1->blue
+        bool isCycle = false; bool isBipartite = true;
         while(que.size()){
             int sz = que.size();
             while(sz--){
-                int parent = que.front();
+                int parr = que.front();
                 que.pop();
-                if(vis[parent] != -1){
-                    isCycle = true; //cycle is there
-                    //now i have to cheak if it is odd length or even length
-                    //conflict means the colour that was colored with != the curr colour
-                    if(vis[parent] != clr)
+                if(vis[parr] != -1){
+                    isCycle = true;
+                    if(vis[parr] != clr){
                         isBipartite = false;
-                    if(!isBipartite)
                         return false;
+                    }
                     continue;
                 }
-                vis[parent] = clr;
-                for(int child:graph[parent]){
-                    if(vis[child] == -1){
+                vis[parr] = clr;
+                for(int child:graph[parr]){
+                    if(vis[child] == -1)
                         que.push(child);
-                    }
                 }
             }
-            //colored the parent node
             clr = (clr+1)%2;
         }
         return true;
     }
-public:
     bool isBipartite(vector<vector<int>>& graph) {
-        fill(vis,vis+100, -1);
-        int n = graph.size();
-        for(int v=0;v<n;v++){
-            if(vis[v] == -1 and !bfs(graph,v))
+        int v = graph.size();
+        fill(vis,vis+v,-1);
+        for(int i=0;i<v;i++){
+            if(vis[i] == -1 and !bfs(graph,i))
                 return false;
         }
         return true;
