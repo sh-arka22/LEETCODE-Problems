@@ -4,7 +4,7 @@ public:
     bool bfs(vector<vector<int>>& graph, int src){
         queue<int>que;
         que.push(src);
-        // vis[src] = 0;
+        // vis[src] = 1;
         //0->green 1->red;
         int clr = 0;
         bool isCycle = false; bool isBipartite = true;
