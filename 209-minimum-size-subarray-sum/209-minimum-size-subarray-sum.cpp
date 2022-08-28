@@ -1,24 +1,43 @@
 class Solution {
 public:
-    int minSubArrayLen(int s, vector<int>& nums)
-{
-    int n = nums.size();
-    if (n == 0)
-        return 0;
-    int ans = INT_MAX;
-    vector<int> sums(n + 1, 0); //size = n+1 for easier calculations
-    //sums[0]=0 : Meaning that it is the sum of first 0 elements
-    //sums[1]=A[0] : Sum of first 1 elements
-    //ans so on...
-    for (int i = 1; i <= n; i++)
-        sums[i] = sums[i - 1] + nums[i - 1];
-    for (int i = 1; i <= n; i++) {
-        int to_find = s + sums[i - 1];
-        auto bound = lower_bound(sums.begin(), sums.end(), to_find);
-        if (bound != sums.end()) {
-            ans = min(ans, static_cast<int>(bound - (sums.begin() + i - 1)));
-        }
+  int check(std::vector<int> nums, int len)
+  {
+    int ma = 0;
+    int start = 0;
+    int end = start + len - 1;
+    for (int i = start; i <= end; ++i)
+    {
+      ma += nums[i];
     }
-    return (ans != INT_MAX) ? ans : 0;
-}
+    int sum = ma;
+    while (end < nums.size())
+    {
+      end++;
+      if (end >= nums.size())
+        break;
+      sum -= nums[start++];
+      sum += nums[end];
+      ma = max(ma, sum);
+    }
+    return ma;
+  }
+  int minSubArrayLen(int s, vector<int>& nums) {
+    int mi = 1;
+    int ma = nums.size();
+    int res = nums.size() + 1;
+    // debug(check(nums, 2));
+    while (mi <= ma)
+    {
+      int mid_size = (mi + ma) / 2;
+      int sum = check(nums, mid_size);
+      if (sum >= s)
+      {
+        ma = mid_size - 1;
+        res = min(res, mid_size);
+      }
+      else
+        mi = mid_size + 1;
+    }
+    return (res == nums.size() + 1) ? 0 : res;
+  }
 };
