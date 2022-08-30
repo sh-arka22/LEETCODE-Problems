@@ -33,7 +33,7 @@ bool recc(string &s, string &t, int n, int m){
     bool flag = false;
 
     if(t[m-1] == '*'){
-        flag = flag or recc(s, t, n-1, m) or recc(s, t, n-1, m-1) or recc(s, t, n, m-1);
+        flag = flag or recc(s, t, n-1, m)  or recc(s, t, n, m-1);
     }
     else if(t[m-1] == '?'){
         flag = recc(s, t, n-1, m-1);
