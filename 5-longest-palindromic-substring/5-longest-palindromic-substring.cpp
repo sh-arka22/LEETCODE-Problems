@@ -39,8 +39,9 @@ private:
         string res = "";
         int maxi = 0;
         for(int gap = 1; gap<=n; gap++){
-           for(int i=0, j = gap-1; j<n; i++,j++) {
-
+           for(int i=0 ; i<n; i++) {
+                int j = i+gap-1;
+               if(j>=n) continue;
                 if(s[i]==s[j]){
                     if(gap == 1){
                         dp[i][j] = 1;
