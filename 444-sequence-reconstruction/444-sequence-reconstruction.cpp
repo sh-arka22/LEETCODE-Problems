@@ -21,7 +21,7 @@ public:
         vector<int>topo;
         while(que.size()){
             int sz = que.size();
-            if(sz > 1) return false;
+            if(sz >= 2) return false;
             while(sz--){
                 int parr = que.front();
                 que.pop();
