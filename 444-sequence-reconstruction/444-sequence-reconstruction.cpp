@@ -2,39 +2,36 @@ class Solution {
 public:
     bool sequenceReconstruction(vector<int>& nums, vector<vector<int>>& sequences) {
         int n = nums.size();
-        vector<int> indeg(n + 1);
-        vector<vector<int>> g(n + 1);
+        vector<int>graph[n+1];
+        
+        int indegree[n+1];
+        fill(indegree,indegree+n+1,0);
+        
         for(auto &seq : sequences){
             int m = seq.size();
             for(int i = 0; i < m - 1; i++){
-                indeg[seq[i + 1]]++;
-                g[seq[i]].push_back(seq[i + 1]);
+                indegree[seq[i + 1]]++;
+                graph[seq[i]].push_back(seq[i + 1]);
             }
         }
         
+        queue<int>que;
+        for(int i=1;i<=n;i++) if(indegree[i] == 0) que.push(i);
         
-        queue<int> q;
-        for(int i = 1; i <= n; i++){
-            if(indeg[i] == 0){
-                q.push(i);
-            }
-        }
-        vector<int> top;
-        while(q.size()){
-            int lvl = q.size();
-            if(lvl > 1) return false;;
-            for(int i = 0; i < lvl; i++){
-                int u = q.front(); q.pop();
-                top.push_back(u);
-                for(auto &v : g[u]){
-                    indeg[v]--;
-                    if(indeg[v] == 0){
-                        q.push(v);
-                    }
+        vector<int>topo;
+        while(que.size()){
+            int sz = que.size();
+            if(sz > 1) return false;
+            while(sz--){
+                int parr = que.front();
+                que.pop();
+                topo.push_back(parr);
+                for(int child:graph[parr]){
+                    if(--indegree[child]==0)
+                        que.push(child);
                 }
             }
         }
-        return top.size() == nums.size();
-        
+        return topo.size()==n;
     }
 };
