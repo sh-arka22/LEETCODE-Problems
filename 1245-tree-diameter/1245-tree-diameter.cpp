@@ -27,7 +27,7 @@ public:
             int sz = que.size();
             if(n == 2) return rad*2 + 1;
             if(n == 1) return rad*2;
-            while(sz--){
+            for(int i=0;i<sz;i++){
                 int leaf = que.front();
                 que.pop();
                 n--; // one leaf node got processed
