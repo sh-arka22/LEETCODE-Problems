@@ -1,27 +1,19 @@
 class Solution {
 public:
-    unordered_set<string>st;
-    int *dp;
-    int recc(string s, int n, int start){
-        if(start==n) return dp[start] = 1;
-        if(dp[start] != -1) return dp[start];
-        int cnt = 0;
-        for(int end = start;end<n;end++){
-            string curr = s.substr(start,end-start+1);
-            if(st.count(curr)){
-                cnt += recc(s, n, end+1);
+    bool wordBreak(string s, vector<string>& wordDict) {
+        set<string> word_set(wordDict.begin(), wordDict.end());
+        vector<bool> dp(s.length() + 1);
+        dp[0] = true;
+
+        for (int i = 1; i <= s.length(); i++) {
+            for (int j = 0; j < i; j++) {
+                if (dp[j] and
+                    word_set.find(s.substr(j, i - j)) != word_set.end()) {
+                    dp[i] = true;
+                    break;
+                }
             }
         }
-        return dp[start] = cnt;
-    }
-
-    bool wordBreak(string s, vector<string>& wordDict) {
-        for(string word:wordDict){
-            st.insert(word);
-        }
-        int n = s.size();
-        dp = new int[n+1];
-        fill(dp,dp+n+1,-1);
-        return recc(s,n,0);        
+        return dp[s.length()];
     }
 };
