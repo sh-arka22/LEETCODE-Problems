@@ -13,6 +13,6 @@ public:
             if(num[i] < num[j]) {swap(num[i], num[j]); break;}
         }
         reverse(num.begin()+i+1, num.end());
-        return (stoll(num) > INT_MAX or stoll(num) <= N ) ? -1 : stoll(num);
+        return (stoll(num) > INT_MAX or stoll(num) <= 0 ) ? -1 : stoll(num);
     }
 };
