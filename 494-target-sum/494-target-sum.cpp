@@ -3,14 +3,14 @@ public:
     vector<vector<int>>dp;
 // map<pair<int,int>,int>dp;
 int recc(vector<int> &nums, int n, int tar, int sum){
-    if(n==0) return dp[n][tar] = (tar==sum);
-    if(dp[n][tar] != -1) return dp[n][tar];
+    if(n==0) return dp[n][sum] = (tar==sum);
+    if(dp[n][sum] != -1) return dp[n][sum];
     int cnt = 0;
 
-    if(tar - (nums[n-1]) >= 0) cnt += recc(nums,n-1, tar - (nums[n-1]), sum);
-    if(tar - (-nums[n-1]) <= 2*sum) cnt += recc(nums,n-1, tar - (-nums[n-1]), sum);
+    cnt += recc(nums,n-1, tar , sum + (nums[n-1]));
+    cnt += recc(nums,n-1, tar , sum - (nums[n-1]));
 
-    return dp[n][tar] = cnt;
+    return dp[n][sum] = cnt;
 }
 
 int findTargetSumWays(vector<int>& nums, int target) {
