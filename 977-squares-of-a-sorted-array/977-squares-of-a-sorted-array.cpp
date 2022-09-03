@@ -10,7 +10,7 @@ public:
         
         int i = 0, j = n-1, k = n-1;
         
-        while(k>=0){
+        while(i<=j){
             if(nums[i]>nums[j]){
                 ans[k--] = nums[i++];
             }
