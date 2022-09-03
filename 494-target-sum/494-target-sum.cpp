@@ -13,7 +13,7 @@ public:
 
     int findTargetSumWays(vector<int>& nums, int target) {
         int sum = accumulate(begin(nums), end(nums), 0);
-        if(sum < target or -sum > target) return 0;
+        if(sum < target or sum < -target) return 0;
 
         return recc(nums,nums.size(), target);
     }
