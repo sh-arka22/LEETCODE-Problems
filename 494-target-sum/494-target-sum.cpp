@@ -1,20 +1,22 @@
 class Solution {
 public:
-    int recc(vector<int> &nums, int n, int tar){
-        if(n==0) return tar==0;
+    vector<vector<int>>dp;
+// map<pair<int,int>,int>dp;
+int recc(vector<int> &nums, int n, int tar, int sum){
+    if(n==0) return dp[n][tar] = (tar==sum);
+    if(dp[n][tar] != -1) return dp[n][tar];
+    int cnt = 0;
 
-        int cnt = 0;
+    if(tar - (nums[n-1]) >= 0) cnt += recc(nums,n-1, tar - (nums[n-1]), sum);
+    if(tar - (-nums[n-1]) <= 2*sum) cnt += recc(nums,n-1, tar - (-nums[n-1]), sum);
 
-        cnt += recc(nums,n-1, tar - (nums[n-1]));
-        cnt += recc(nums,n-1, tar - (-nums[n-1]));
+    return dp[n][tar] = cnt;
+}
 
-        return cnt;
-    }
-
-    int findTargetSumWays(vector<int>& nums, int target) {
-        int sum = accumulate(begin(nums), end(nums), 0);
-        if(sum < target or sum < -target) return 0;
-
-        return recc(nums,nums.size(), target);
-    }
+int findTargetSumWays(vector<int>& nums, int target) {
+    int sum = accumulate(begin(nums), end(nums), 0);
+    if(sum < target or sum < -target) return 0;
+    dp.resize(nums.size()+1, vector<int>(2*sum+1, -1));
+    return recc(nums,nums.size(), sum + target, sum);
+}
 };
