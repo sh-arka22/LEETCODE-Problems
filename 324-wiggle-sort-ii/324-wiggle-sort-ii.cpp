@@ -21,7 +21,8 @@ public:
             i+=2;
             j--;
         }
-        nums.assign(res.begin(), res.end());
+        nums = res;
+        // nums.assign(res.begin(), res.end());
         // copy(res.begin(), res.end(), back_inserter(nums));
     }
 };
