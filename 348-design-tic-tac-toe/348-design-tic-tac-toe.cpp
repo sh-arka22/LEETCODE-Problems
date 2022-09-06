@@ -1,30 +1,27 @@
 class TicTacToe {
 public:
-    int *r ,*c ,d1 ,d2, n;
+    int *r, *c, d1, d2, n;
     TicTacToe(int n) {
-        r = new int[n];
-        c = new int[n];
-        for(int i=0;i<n;i++){
-            r[i] = c[i] = 0;
-        }
-        d1 = d2 = 0;
         this->n = n;
+        r = new int[n], c = new int[n], d1 = d2 = 0;
+        fill(r,r+n,0);
+        fill(c,c+n,0);
     }
     
     int move(int row, int col, int player) {
         if(player == 1){
-            r[row]++;
-            c[col]++;
-            if(row == col) d1++;
-            if(row+col == n-1) d2++;
+            r[row]++, c[col]++;
+            d1 += (row == col);
+            d2 += (row+col == n-1);
+            
             if(r[row] == n or c[col] == n or d1 == n or d2 == n) return 1;
         }
         
         if(player == 2){
-            r[row]--;
-            c[col]--;
-            if(row == col) d1--;
-            if(row+col == n-1) d2--;
+            r[row]--, c[col]--;
+            d1 -= (row == col);
+            d2 -= (row+col == n-1);
+            
             if(r[row] == -n or c[col] == -n or d1 == -n or d2 == -n) return 2;
         }
         return 0;
