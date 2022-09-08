@@ -1,25 +1,36 @@
 class Solution {
 public:
     vector<vector<int>>dp;
-int recc(int n, int m, vector<vector<int>>&grid){
-    // if(n<0 or m<0) return 0;
-    if(n==0 and m==0) return dp[n][m] = 1;
-    if(dp[n][m] != -1) return dp[n][m];
-    int left = 0;int right = 0;
-    if(m>0){
-        right = grid[n][m-1] ? 0 : recc(n,m-1, grid);
+int tabu(int N, int M, vector<vector<int>>&grid){
+    for(int n =0;n<=N;n++){
+        for(int m=0;m<=M;m++){
+            if(n<0 or m<0){
+                dp[n][m] = 0;
+                continue;
+            }
+            if(n==0 and m==0){
+                dp[n][m] = 1;
+                continue;
+            }
+
+            int left = 0;int right = 0;
+            if(m>0){
+                right = grid[n][m-1] ? 0 : dp[n][m-1];
+            }
+            if(n>0){
+                left = grid[n-1][m] ? 0 : dp[n-1][m];
+            }
+            dp[n][m] = left + right;
+        }
     }
-    if(n>0){
-        left = grid[n-1][m] ? 0 : recc(n-1,m, grid);
-    }
-    return dp[n][m] = left + right;
+    return dp[N][M];
 }
 
 int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
     int n = obstacleGrid.size()-1;
     int m = obstacleGrid[0].size()-1;
-    dp.resize(n+1, vector<int>(m+1,-1));
+    dp.resize(n+1, vector<int>(m+1,0));
     if(obstacleGrid[0][0] or obstacleGrid[n][m]) return 0;
-    return recc(n,m,obstacleGrid);
+    return tabu(n,m,obstacleGrid);
 }
 };
