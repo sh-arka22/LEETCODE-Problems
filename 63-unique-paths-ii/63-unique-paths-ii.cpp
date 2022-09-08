@@ -4,10 +4,6 @@ public:
 int tabu(int N, int M, vector<vector<int>>&grid){
     for(int n =0;n<=N;n++){
         for(int m=0;m<=M;m++){
-            if(n<0 or m<0){
-                dp[n][m] = 0;
-                continue;
-            }
             if(n==0 and m==0){
                 dp[n][m] = 1;
                 continue;
