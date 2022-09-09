@@ -1,27 +1,24 @@
 class Solution {
 public:
-    vector<vector<uint>>dp;
-    int SingleCombinations(vector<int>nums, int Tar, int N){
-        for(int n = 0; n<=N; n++){
-            for(int tar = 0; tar<=Tar; tar++){
-                if(n==0 or tar==0){
-                    dp[n][tar] = (tar == 0);
-                    continue;
-                }
-                if(tar - nums[n-1] >= 0)
-                    dp[n][tar] += dp[n-1][tar-nums[n-1]];
-                dp[n][tar] += dp[n-1][tar];
-            }
+    vector<vector<int>>dp;
+    bool recc(int n, int tar, vector<int>arr){
+        if(n==0 or tar ==arr[n]) return dp[tar][n] = (tar==arr[n]);
+        if(dp[tar][n] != -1) return dp[tar][n];
+        bool flag = false;
+        if(tar - arr[n] >= 0){
+            flag = flag or recc(n-1, tar-arr[n], arr);
         }
-        return dp[N][Tar];
+        flag = flag or recc(n-1, tar, arr);
+
+        return dp[tar][n] = flag;
     }
-    bool canPartition(vector<int> nums) {
+
+    bool canPartition(vector<int>& nums) {
         int n = nums.size();
         int sum = accumulate(nums.begin(), nums.end(), 0);
-        if(sum & 1) return false;
-
-        int tar = sum/2;
-        dp.resize(n+1,vector<uint>(tar+1,0));
-        return SingleCombinations(nums, tar, n);
+        if(sum%2) return false;
+        dp.resize((sum/2)+1,vector<int>(n,-1));
+        int ans = recc(n-1, sum/2, nums);
+        return ans;   
     }
 };
