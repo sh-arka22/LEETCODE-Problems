@@ -1,21 +1,31 @@
 class Solution {
-public:
-    int *dp;
-    int permutationTable(vector<int>&conis, int Tar){
-        dp[0] = 0;
-        for(int tar = 1; tar<=Tar; tar++){
-            for(int ele: conis){
-                if(tar - ele >= 0){
-                    dp[tar] = min(dp[tar], dp[tar - ele]+1);
-                }
-            }
+private:
+    vector<vector<int>>dp;
+    int recc(vector<int> &num, int tar, int n){
+        if(n==0){
+            if(tar % num[0] == 0) return dp[n][tar] = tar/num[0];
+            return dp[n][tar] = (int)1e9;
         }
-        return dp[Tar] != (int)1e9 ? dp[Tar] : -1;
+        if(dp[n][tar] != -1) return dp[n][tar];
+        int pick = (int)1e9;
+        if(tar>=num[n]){
+            pick = recc(num, tar-num[n], n)+1;
+        }
+        int notPick = recc(num, tar, n-1);
+
+        return dp[n][tar] = min(pick, notPick);
     }
 
+int minimumElements(vector<int> &num, int x){
+        // Write your code here.
+        int n = num.size();
+        dp.resize(n, vector<int>(x+1, -1));
+        int ans = recc(num, x, n-1) == (int)1e9 ? -1 : recc(num, x, n-1);
+        dp.clear();
+        return ans;
+    }
+public:
     int coinChange(vector<int>& coins, int amount) {
-        dp = new int[amount+1];
-        fill(dp, dp + amount+1, (int)1e9);
-        return permutationTable(coins, amount);  
+        return minimumElements(coins, amount);
     }
 };
