@@ -1,19 +1,26 @@
 class Solution {
 private:
     vector<vector<int>>dp;
-    int recc(vector<int> &num, int tar, int n){
-        if(n==0){
-            if(tar % num[0] == 0) return dp[n][tar] = tar/num[0];
-            return dp[n][tar] = (int)1e9;
+    int recc(vector<int> &num, int Tar, int N){
+        for(int n=0;n<=N;n++){
+            for(int tar=0;tar<=Tar;tar++){
+                if(n==0){
+                    if(tar % num[0] == 0){
+                        dp[n][tar] = tar/num[0];
+                        continue;
+                    }
+                    dp[n][tar] = (int)1e9;
+                    continue;
+                }
+                int pick = (int)1e9;
+                if(tar>=num[n]){
+                    pick = dp[n][tar-num[n]]+1;
+                }
+                int notPick = dp[n-1][tar];
+                dp[n][tar] = min(pick, notPick);
+            }
         }
-        if(dp[n][tar] != -1) return dp[n][tar];
-        int pick = (int)1e9;
-        if(tar>=num[n]){
-            pick = recc(num, tar-num[n], n)+1;
-        }
-        int notPick = recc(num, tar, n-1);
-
-        return dp[n][tar] = min(pick, notPick);
+        return dp[N][Tar];
     }
 
 int minimumElements(vector<int> &num, int x){
