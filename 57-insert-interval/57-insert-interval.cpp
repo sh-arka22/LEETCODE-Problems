@@ -16,16 +16,11 @@ public:
             ans.push_back(interval);
             pos++;
         }
-        if(ans.size() == 0){
+        if(ans.size() == 0 or ans.back()[1] < newInterval[0]){
             ans.push_back(newInterval);
         }
         else{
-            if(ans.back()[1] < newInterval[0]){
-                ans.push_back(newInterval);
-            }
-            else{
-                ans.back()[1] = max(ans.back()[1], newInterval[1]);
-            }
+            ans.back()[1] = max(ans.back()[1], newInterval[1]);
         }
         
         while(pos<n){
