@@ -1,6 +1,5 @@
 class Solution {
 private:
-    vector<vector<int>>dp;
     vector<int>prev, curr;
     int recc(string s, int N, string t, int M){
         for(int n=0;n<=N; n++){
@@ -23,11 +22,9 @@ private:
 
     int lcs(string s, string t){
         int n = s.size(), m = t.size();
-        dp.resize(n+1, vector<int>(m+1,0));
         prev.resize(m+1, 0);
         curr.resize(m+1, 0);
         int ans = recc(s, n, t, m);
-        dp.clear();
         return ans;
     }
 public:
