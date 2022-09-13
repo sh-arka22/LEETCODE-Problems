@@ -21,6 +21,7 @@ public:
                 min = nums[i];
             }
         }
+        cout<<st<<" "<<end;
         return end-st+1;
     }
 };
