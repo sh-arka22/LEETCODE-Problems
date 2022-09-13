@@ -1,7 +1,7 @@
 class Solution {
 private:
     vector<vector<int>>dp;
-int recc(string s1, string s2, int n, int m){
+int recc(string &s1, string &s2, int n, int m){
     if(n==0 or m==0){
         if(n>0) return dp[n][m] = n;
         if(m>0) return dp[n][m] = m;
