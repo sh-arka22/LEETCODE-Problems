@@ -1,5 +1,6 @@
 class Solution {
 public:
+    //SPACE OPTIMISED
     vector<int> curr, prev;
     int recc(string &s, string &t, int N, int M){
         for(int n=0;n<=N;n++){
