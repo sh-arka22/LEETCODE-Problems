@@ -1,34 +1,25 @@
 class Solution {
 private:
-    vector<vector<vector<int>>> dp;
-    int getAns(vector<int>& Arr, int n, int ind, int buy, int cap){
-
-        if(ind==n or cap==0) return dp[ind][cap][buy] = 0; //base case
-
-        if(dp[ind][cap][buy]!=-1)
-            return dp[ind][cap][buy];
-
+    vector<vector<vector<int>>>dp;
+    int recc(vector<int>& prices, int idx, int k, int state, int n){
+        if(n == idx or k == 0) return dp[idx][k][state] = 0;
+        if(dp[idx][k][state] != -1) return dp[idx][k][state];
         int profit;
-
-        if(buy==0){// We can buy the stock
-            profit = max(0+getAns(Arr,n,ind+1,0,cap), 
-                        -Arr[ind] + getAns(Arr,n,ind+1,1,cap));
+        if(state == 0){
+            // i can buy;
+            profit = max(recc(prices, idx+1, k, 0, n), -prices[idx] + recc(prices, idx+1, k, 1, n));
         }
-
-        if(buy==1){// We can sell the stock
-            profit = max(0+getAns(Arr,n,ind+1,1,cap),
-                        Arr[ind] + getAns(Arr,n,ind+1,0,cap-1));
+        else if(state == 1){
+            //i can sell
+            profit = max(recc(prices, idx+1, k, 1, n), prices[idx]+ recc(prices, idx+1, k-1, 0, n));
         }
-
-        return dp[ind][cap][buy] = profit;
+        return dp[idx][k][state] = profit;
     }    
 public:
-    int maxProfit(vector<int>& prices)
-    {   int n = prices.size();
-        // Creating a 3d - dp of size [n][2][3]
-        dp.resize(n+1,vector<vector<int>>(3,vector<int>(2,-1)));
-
-        return getAns(prices,n,0,0,2);
-
+    int maxProfit(vector<int>& prices) {
+        int k = 2;
+        int n = prices.size();
+        dp.resize(n+1, vector<vector<int>>(k+1, vector<int>(2,-1)));
+        return recc(prices, 0, k, 0, n);
     }
 };
