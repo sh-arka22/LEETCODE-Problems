@@ -6,11 +6,11 @@ private:
         if(dp[idx][state] != -1) return dp[idx][state];
         int profit;
         if(state == 0){
-            //buy state;
+            //i can buy;
             profit = max(recc(prices, idx+1, n, 0), recc(prices, idx+1, n, 1) - prices[idx]);
         }
         else{
-            //sell state;
+            //i can sell;
             profit = max(recc(prices, idx+1, n, 1), prices[idx] + recc(prices, idx, n, 0));
         }
         return dp[idx][state] = profit;
