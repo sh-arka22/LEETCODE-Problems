@@ -2,23 +2,20 @@ class Solution {
 public:
     const static int N = 2e3+1;
     int dp[N][N];
-    string removeStars(string &str) {
-        if (str.length() == 0)
-            return str;
+    string removeStars(string &p){
+        int n = p.size();
+        if(n==0) return "";
+        string res ;
+        res+=string(1,p[0]);
+        for(int i=1;i<n;i++){
+            if(p[i] == '*' and res.back() == '*'){
 
-        string sb = "";
-        sb+=str[0];
-
-        int i = 1;
-        while (i < str.length()) {
-            while (i < str.length() && sb[sb.length() - 1] == '*' && str[i] == '*')
-                i++;
-            if (i < str.length())
-                sb+=str[i];
-            i++;
+            }
+            else{
+                res += string(1,p[i]);
+            }
         }
-
-        return sb;
+        return res;
     }
 
 
