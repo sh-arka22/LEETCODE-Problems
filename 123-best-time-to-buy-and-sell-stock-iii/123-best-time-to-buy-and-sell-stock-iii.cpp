@@ -3,7 +3,7 @@ private:
     vector<vector<vector<int>>> dp;
     int getAns(vector<int>& Arr, int n, int ind, int buy, int cap){
 
-        if(ind==n || cap==0) return dp[ind][cap][buy] = 0; //base case
+        if(ind==n or cap==0) return dp[ind][cap][buy] = 0; //base case
 
         if(dp[ind][cap][buy]!=-1)
             return dp[ind][cap][buy];
