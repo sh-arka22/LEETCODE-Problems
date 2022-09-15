@@ -1,31 +1,27 @@
 class Solution {
 public:
     vector<int> findPeakGrid(vector<vector<int>>& mat) {
-        int m = mat.size(), n = mat[0].size();
+        int startCol = 0, endCol = mat[0].size()-1;
         
-        int low = 0, high = m;
-        while(low < high){
-            int mid = low + (high - low)/2;
+        while(startCol <= endCol){
+            int maxRow = 0, midCol = startCol + (endCol-startCol)/2;
             
-            //finding maximum element of the row
-            int mx = max_element(mat[mid].begin(), mat[mid].end()) - mat[mid].begin();
+            for(int row=0; row<mat.size(); row++){
+                maxRow = mat[row][midCol] >= mat[maxRow][midCol]? row : maxRow;   
+            }
             
-            //if mid == 0, only one row exist in [low,high) range, so maximum of that row will be answer
-            if(mid == 0) return {mid, mx};
-
-            // checking whether this is the peak element, 
-            // (mid == m-1 || mat[mid][mx] > mat[mid+1][mx]) handles cornes case of mid is last row
-            else if(mat[mid][mx] > mat[mid-1][mx] && (mid == m-1 || mat[mid][mx] > mat[mid+1][mx]) ){
-                return {mid, mx};
-            }
-            else if(mat[mid-1][mx] > mat[mid][mx]){
-                high = mid;
-            }
-            else{
-                low = mid+1;
-            }
+            bool leftIsBig    =   midCol-1 >= startCol  &&  mat[maxRow][midCol-1] > mat[maxRow][midCol];
+            bool rightIsBig   =   midCol+1 <= endCol    &&  mat[maxRow][midCol+1] > mat[maxRow][midCol];
+            
+            if(!leftIsBig && !rightIsBig)          // we have found the peak element
+                return vector<int>{ maxRow, midCol};
+            
+            else if(rightIsBig) // if rightIsBig, then there is an element in 'right' that is bigger than all the elements in the 'midCol', 
+                startCol = midCol+1;    //so 'midCol' cannot have a 'peakPlane'
+            
+            else // leftIsBig
+                endCol = midCol-1;
         }
-        
-        return {0,0};
+        return vector<int>{-1,-1};
     }
 };
