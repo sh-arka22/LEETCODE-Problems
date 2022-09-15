@@ -18,9 +18,9 @@ public:
             
             else if(rightIsBig) // if rightIsBig, then there is an element in 'right' that is bigger than all the elements in the 'midCol', 
                 startCol = midCol+1;    //so 'midCol' cannot have a 'peakPlane'
-            
+        
             else // leftIsBig
-                endCol = midCol-1;
+                endCol = midCol;
         }
         return vector<int>{-1,-1};
     }
