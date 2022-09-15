@@ -1,44 +1,35 @@
 class Solution {
 private:
-    int lower_bound(vector<int>& nums, int target){
-        int n = nums.size();
-        int s=0, e=n-1;
-        int start = -1;
-        while(s<=e)
-        {
-            int mid = (s+e)/2;
-            if(nums[mid] == target)
-            {
-                start = mid;
-                e = mid-1;
+    int lower_bound(vector<int>& nums, int tar){
+        int idx = -1;
+        int l = 0, r = nums.size()-1;
+        
+        while(l<=r){
+            int mid = (l+r)/2;
+            if(nums[mid] == tar){
+                idx = mid;
+                r = mid-1;
             }
-            else if(nums[mid] > target)
-                e = mid-1;
-            else
-                s = mid+1;
+            else if(nums[mid]<tar) l = mid+1;
+            else r = mid-1;
         }
-        return start;
+        return idx;
     }
     
-    
-    int upper_bound(vector<int>& nums, int target){
-        int n = nums.size();
-        int s=0, e=n-1;
-        int end = -1;
-        while(s<=e)
-        {
-            int mid = (s+e)/2;
-            if(nums[mid] == target)
-            {
-                end = mid;
-                s = mid+1;
+    int upper_bound(vector<int>& nums, int tar){
+        int idx = -1;
+        int l = 0, r = nums.size()-1;
+        
+        while(l<=r){
+            int mid = (l+r)/2;
+            if(nums[mid] == tar){
+                idx = mid;
+                l = mid+1;
             }
-            else if(nums[mid] > target)
-                e = mid-1;
-            else
-                s = mid+1;
+            else if(nums[mid]<tar) l = mid+1;
+            else r = mid-1;
         }
-        return end;
+        return idx;
     }
 public:
     vector<int> searchRange(vector<int>& nums, int tar) {
