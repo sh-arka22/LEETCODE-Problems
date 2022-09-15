@@ -1,5 +1,6 @@
 class Solution {
 public:
+    // O(M + N)
     vector<int> findPeakGrid(vector<vector<int>>& mat) {
         int r = mat.size();// row
         int c = mat[0].size();//col
