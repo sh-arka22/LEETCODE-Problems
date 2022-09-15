@@ -1,21 +1,18 @@
 class Solution {
+private:
+    vector<vector<int>>dp;
+    int solve(vector<int>& nums, int i, int prevIdx) {
+    if(i < 0) return 0;                                // cant pick any more elements
+    if(dp[i][prevIdx] != -1) return dp[i][prevIdx];
+    int pick = (prevIdx == nums.size() or nums[i] < nums[prevIdx]) ? solve(nums, i - 1, i)+1 : 0;
+    int dontPick = solve(nums, i-1, prevIdx);
+    
+    return dp[i][prevIdx] = max(pick, dontPick);
+}
 public:
-    int *dp;
-    int tabu(vector<int>& nums){
-        int n = nums.size(), maxLen = 0;
-        dp = new int[n];
-        for(int i=0;i<n;i++){
-            dp[i] = 1;
-            for(int j=i-1;j>=0;j--){
-                if(nums[i] > nums[j]){
-                    dp[i] = max(dp[i], dp[j] + 1); 
-                }
-            }
-            maxLen = max(maxLen,dp[i]);
-        }
-        return maxLen;
-    }
     int lengthOfLIS(vector<int>& nums) {
-        return tabu(nums);
+        int n = nums.size();
+        dp.resize(n, vector<int>(n+1, -1));
+        return solve(nums, n-1,n);
     }
 };
