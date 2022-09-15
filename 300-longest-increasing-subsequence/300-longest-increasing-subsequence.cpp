@@ -1,18 +1,26 @@
 class Solution {
 private:
-    vector<vector<int>>dp;
-    int solve(vector<int>& nums, int i, int prevIdx) {
-    if(i < 0) return 0;                                // cant pick any more elements
-    if(dp[i][prevIdx] != -1) return dp[i][prevIdx];
-    int pick = (prevIdx == nums.size() or nums[i] < nums[prevIdx]) ? solve(nums, i - 1, i)+1 : 0;
-    int dontPick = solve(nums, i-1, prevIdx);
-    
-    return dp[i][prevIdx] = max(pick, dontPick);
-}
+    vector<int>dp;
+    int recc(vector<int>& nums, int idx){
+        if(idx-1 < 0) return dp[idx] = 0;
+        if(dp[idx] != -1) return dp[idx];
+        int cnt = 1;
+        for(int i=idx;i>=1;i--){
+            if(nums[idx-1]>nums[i-1]){
+                int faith = recc(nums, i) ;
+                cnt = max(cnt, faith+1);
+            }
+        }
+        return dp[idx] = cnt;
+    }
 public:
     int lengthOfLIS(vector<int>& nums) {
         int n = nums.size();
-        dp.resize(n, vector<int>(n+1, -1));
-        return solve(nums, n-1,n);
+        int maxLen = -1;
+        dp.resize(n+1, -1);
+        for(int i=1;i<n+1;i++){
+            maxLen = max(maxLen,recc(nums, i));
+        }
+        return maxLen;
     }
 };
