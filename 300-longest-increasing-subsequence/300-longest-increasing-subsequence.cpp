@@ -1,32 +1,24 @@
 class Solution {
 private:
-    vector<int>dp;
-    int recc(vector<int>& nums, int Idx){
-        for(int idx=0;idx<=Idx;idx++){
-            if(idx-1 < 0){
-                dp[idx] = 0;
-                continue;
-            }
-            int cnt = 1;
-            for(int i=idx;i>=1;i--){
-                if(nums[idx-1]>nums[i-1]){
-                    int faith = dp[i];
-                    cnt = max(cnt, faith+1);
-                }
-            }
-            dp[idx] = cnt;
-        }
-        return 1;
-    }
+   int search(vector<int>& nums){
+       int n = nums.size();
+       vector<int>tmp;
+       int len = 1;
+       tmp.push_back(nums[0]);
+       for(int i=1;i<n;i++){
+           if(nums[i]>tmp.back()) {
+               tmp.push_back(nums[i]);
+               len++;
+           }
+           else{
+               int idx = lower_bound(tmp.begin(), tmp.end(), nums[i]) - tmp.begin();
+               tmp[idx] = nums[i];
+           }
+       }
+       return len;
+   } 
 public:
     int lengthOfLIS(vector<int>& nums) {
-        int n = nums.size();
-        int maxLen = -1;
-        dp.resize(n+1, -1);
-        int call = recc(nums, n);
-        for(int i=1;i<n+1;i++){
-            maxLen = max(maxLen,dp[i]);
-        }
-        return maxLen;
+        return search(nums);
     }
 };
