@@ -1,21 +1,26 @@
 class Solution {
-public:
-    int *dp;
-    int tabu(vector<int>& nums){
-        int n = nums.size(), maxLen = 0;
-        dp = new int[n];
-        for(int i=0;i<n;i++){
-            dp[i] = 1;
-            for(int j=i-1;j>=0;j--){
-                if(nums[i] > nums[j]){
-                    dp[i] = max(dp[i], dp[j] + 1); 
-                }
+private:
+    vector<int>dp;
+    int recc(vector<int>& nums, int idx){
+        if(idx-1 < 0) return dp[idx] = 0;
+        if(dp[idx] != -1) return dp[idx];
+        int cnt = 1;
+        for(int i=idx;i>=1;i--){
+            if(nums[idx-1]>nums[i-1]){
+                int faith = recc(nums, i) ;
+                cnt = max(cnt, faith+1);
             }
-            maxLen = max(maxLen,dp[i]);
+        }
+        return dp[idx] = cnt;
+    }
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        int n = nums.size();
+        int maxLen = -1;
+        dp.resize(n+1, -1);
+        for(int i=1;i<n+1;i++){
+            maxLen = max(maxLen,recc(nums, i));
         }
         return maxLen;
-    }
-    int lengthOfLIS(vector<int>& nums) {
-        return tabu(nums);
     }
 };
