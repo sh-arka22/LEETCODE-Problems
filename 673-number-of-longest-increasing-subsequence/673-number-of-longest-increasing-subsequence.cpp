@@ -1,40 +1,30 @@
 class Solution {
-public:
-    int *LEN;
-    int *CNT;
-
-    int  count(vector<int>& nums){
-        int maxLen = 0, maxCount = 0;
-        for(int i=0;i<nums.size();i++){
-            LEN[i] = 1;
-            CNT[i] = 1;
-            for(int j = i-1;j>=0;j--){
-                if(nums[i] > nums[j]){
-                    if(LEN[i] < LEN[j]+1){
-                        LEN[i] = LEN[j]+1;
-                        CNT[i] = CNT[j];
-                    }
-                    else if(LEN[i] == LEN[j]+1){
-                        CNT[i] += CNT[j];
-                    }
+private:
+    int LCS(vector<int>nums, int n){
+        vector<int>dp(n,1), cnt(n,1);
+        int maxLen = -1;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<i;j++){
+                if(nums[i]>nums[j] and dp[i] < dp[j]+1){
+                    dp[i] = dp[j]+1;
+                    cnt[i] = cnt[j];
+                }
+                else if(nums[i]>nums[j] and dp[i] == dp[j]+1){
+                    cnt[i] += cnt[j];
                 }
             }
-            if(LEN[i] > maxLen){
-                maxLen = LEN[i];
-                maxCount = CNT[i];
-            }
-            else if(LEN[i] == maxLen){
-                maxCount += CNT[i];
-            }
+            maxLen = max(maxLen, dp[i]);
         }
-        return maxCount;
+        
+        int nos = 0;
+        for(int i=0;i<n;i++){
+            if(dp[i]==maxLen) nos+=cnt[i];
+        }
+        return nos;
     }
-
-
+public:
     int findNumberOfLIS(vector<int>& nums) {
         int n = nums.size();
-        LEN = new int[n];
-        CNT = new int[n];
-        return count(nums);
+        return LCS(nums, n);
     }
 };
