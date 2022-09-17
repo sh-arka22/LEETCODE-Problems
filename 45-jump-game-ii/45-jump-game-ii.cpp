@@ -9,7 +9,7 @@ public:
             int tmp=(int)1e9;
      
             for(int i=1;i<=nums[curr];i++)
-            {   if(i+curr>dest) break;
+            {   if(i+curr>dest) continue;
                 tmp=min(tmp,1+jump(nums,curr+i,dest,dp));  
             }
          dp[curr]=tmp;
