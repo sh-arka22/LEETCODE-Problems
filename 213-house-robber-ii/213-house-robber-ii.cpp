@@ -1,7 +1,7 @@
 class Solution {
 public:
 	int maxsum(int i,vector<int>& nums,vector<int>& dp){
-		if(i<0)return 0;
+		if(i==0 or i==1) return dp[i] = (i == 1 ? max(nums[0], nums[1]) : nums[0]);
 		if(dp[i]!=-1)return dp[i];
 		int pick=nums[i]+maxsum(i-2,nums,dp);
 		int notpick=maxsum(i-1,nums,dp);
