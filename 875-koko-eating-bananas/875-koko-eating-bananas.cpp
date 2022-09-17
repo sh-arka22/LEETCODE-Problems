@@ -7,7 +7,7 @@ public:
                 total += (it/x);
                 total+=1;
             }
-            else total = total + ((it/x))%1000000007;
+            else total = total + ((it/x));
         }
         return total;
     }
