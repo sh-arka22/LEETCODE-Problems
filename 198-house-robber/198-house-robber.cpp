@@ -5,9 +5,9 @@ private:
         if(n==0 or n==1) return dp[n] = (n == 1 ? max(nums[0], nums[1]) : nums[0]);
         if(dp[n] != -1) return dp[n];
         int pick = 0, notpick = 0;
-        if(n-2>=0){
+        // if(n-2>=0){
             pick = nums[n] + recc(nums, n-2);
-        }
+        // }
         notpick = recc(nums, n-1);
         
         return dp[n] = max(pick, notpick);
