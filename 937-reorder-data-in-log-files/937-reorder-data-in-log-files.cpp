@@ -1,4 +1,7 @@
-bool comparator(string a, string b){
+
+class Solution {
+public:
+    static bool comparator(string a, string b){
         int i = a.find(' ');
         int j = b.find(' ');
         
@@ -19,8 +22,6 @@ bool comparator(string a, string b){
         
         return false;
     }
-class Solution {
-public:
     vector<string> reorderLogFiles(vector<string>& logs) {
         stable_sort(logs.begin(), logs.end(), comparator);
         return logs;
