@@ -1,16 +1,23 @@
 class Solution {
 private:
     vector<vector<int>>dp;
-    int recc(vector<int>& cuts, int si, int ei){
-        if(ei-si == 1) return dp[si][ei] = 0;
-        if(dp[si][ei] != -1) return dp[si][ei];
-        int mini = (int)1e9;
-        for(int cut = si+1; cut<ei; cut++){
-            int cost = cuts[ei] - cuts[si] + recc(cuts, si, cut) + recc(cuts, cut, ei);
-            mini = min(mini, cost);
-        }
-        return dp[si][ei] = mini;
+    int tabu(vector<int>& cuts, int SI, int EI){
+    for(int gap=0;gap<=EI ;gap++){
+        for(int si = SI, ei=gap; ei<=EI; si++, ei++){
+            if(ei-si == 1){
+                dp[si][ei] = 0;
+                continue;
+            }
+            int mini = (int)1e9;
+            for(int cut = si+1; cut<ei; cut++){
+                int cost = cuts[ei] - cuts[si] + dp[si][cut] + dp[cut][ei];
+                mini = min(mini, cost);
+            }
+            dp[si][ei] = mini;
+       }
     }
+    return dp[SI][EI];
+}
 public:
     int minCost(int n, vector<int>& cuts) {
         cuts.push_back(n);
@@ -18,6 +25,6 @@ public:
         sort(cuts.begin(), cuts.end());
         int c = cuts.size();
         dp.resize(c, vector<int>(c,-1));
-        return recc(cuts, 0, c-1);
+        return tabu(cuts, 0, c-1);
     }
 };
