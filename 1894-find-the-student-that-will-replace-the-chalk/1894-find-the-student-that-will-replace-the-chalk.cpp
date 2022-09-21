@@ -11,6 +11,6 @@ class Solution {
         return i;
     }
 
-    throw;
+    return 0;
   }
 };
