@@ -1,23 +1,17 @@
 class Solution {
 public:
- 
-   int jump(vector<int> &nums , int curr, int dest,vector<int> &dp)
-    {       
-            if(curr==dest) return 0;
-            if(dp[curr]!=-1) return dp[curr];
-            //cout<<curr<<" ";
-            int tmp=(int)1e9;
-     
-            for(int i=1;i<=nums[curr];i++)
-            {   if(i+curr>dest) continue;
-                tmp=min(tmp,1+jump(nums,curr+i,dest,dp));  
-            }
-         dp[curr]=tmp;
-         return tmp;  
-    }
-    
     int jump(vector<int>& nums) {
-         vector<int> dp(nums.size(),-1);
-         return jump(nums,0,nums.size()-1,dp);
+        int jump = 0;
+        int farthest = 0, currentJumpEnd = 0;
+        int n = nums.size();
+        
+        for(int i=0;i<n-1;i++){
+            farthest = max(farthest, nums[i]+i);
+            if(i == currentJumpEnd){
+                jump++;
+                currentJumpEnd = farthest;
+            }
+        }
+        return jump;
     }
 };
