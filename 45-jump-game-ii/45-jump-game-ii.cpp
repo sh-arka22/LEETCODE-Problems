@@ -1,17 +1,25 @@
 class Solution {
+private:
+    vector<int>dp;
+    int recc(vector<int> &nums, int SI, int ei){
+        for(int si=ei;si>=0;si--){
+            if(si == ei){
+                dp[si] = 0;
+                continue;
+            }
+            int mini = (int)1e9;
+            for(int i =1;i<=nums[si];i++){
+                if(si+i>ei) continue;
+                mini = min(mini, dp[si+i]);
+            }
+            dp[si] = mini+1;
+        }
+        return dp[0];
+    }
 public:
     int jump(vector<int>& nums) {
-        int jump = 0;
-        int farthest = 0, currentJumpEnd = 0;
         int n = nums.size();
-        
-        for(int i=0;i<n;i++){
-            if(i > currentJumpEnd){
-                jump++;
-                currentJumpEnd = farthest;
-            }
-            farthest = max(farthest, nums[i]+i);
-        }
-        return jump;
+        dp.resize(n);
+        return recc(nums, 0, n-1);
     }
 };
