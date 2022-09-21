@@ -1,11 +1,19 @@
 class Solution {
 public:
-    int triangleNumber(vector<int>& nums) {
-        int n = nums.size(), c = 0;
-        sort(nums.begin(), nums.end());
-        for(int i=1; i<n-1; i++)
-            for(int j=0; j<i; j++)
-                c += (lower_bound(nums.begin()+i+1, nums.end(), nums[j]+nums[i])-nums.begin())-i-1;
-        return c;
-    }
+	int triangleNumber(vector<int>& a) {
+		sort(a.begin(),a.end());
+		int n=a.size(),res=0;
+		for(int i=n-1;i>0;i--){
+			int r=i-1;
+			int l=0;
+			while(l<r){
+				if(a[l]+a[r]>a[i]) {
+					res+=r-l;
+					r--;
+				}
+				else l++;
+			}
+		}
+		return res;
+	}
 };
