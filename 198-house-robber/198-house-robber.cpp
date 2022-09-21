@@ -1,22 +1,30 @@
 class Solution {
 private:
     vector<int>dp;
-    int recc(vector<int>&nums, int n){
-        if(n==0 or n==1) return dp[n] = (n == 1 ? max(nums[0], nums[1]) : nums[0]);
-        if(dp[n] != -1) return dp[n];
-        int pick = 0, notpick = 0;
-        // if(n-2>=0){
-            pick = nums[n] + recc(nums, n-2);
-        // }
-        notpick = recc(nums, n-1);
-        
-        return dp[n] = max(pick, notpick);
+    int recc(vector<int>& nums, int Idx){
+        for(int idx=0;idx<=Idx;idx++){
+            if(idx == 0){
+                dp[idx] = nums[idx];
+                continue;
+            }
+            if(idx == 1){
+                dp[idx] = max(nums[0], nums[1]);
+                continue;
+            }
+            int pick = -(int)1e9, notpick = -(int)1e9;
+            if(idx-2>=0){
+                pick = nums[idx] + dp[idx-2];
+            }
+            notpick = dp[idx-1];
+
+            dp[idx] = max(pick, notpick);
+        }
+        return dp[Idx];
     }
 public:
     int rob(vector<int>& nums) {
         int n = nums.size();
-        dp.resize(n,-1);
-        if(n == 2) return max(nums[0], nums[1]);
+        dp.resize(n);
         return recc(nums, n-1);
     }
 };
