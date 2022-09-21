@@ -20,7 +20,7 @@ bool ispossible(vector<int> &nums , int maxOperations , int mid )
 public:
 int minimumSize(vector<int>& nums, int maxOperations) {
     int start = 1;
-    int end = INT_MAX;
+    int end = (int)1e9;
     for( int i=0 ; i<nums.size() ;i++)
     {
         end = max(end , nums[i]);
