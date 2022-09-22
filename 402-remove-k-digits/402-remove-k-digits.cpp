@@ -1,5 +1,8 @@
 class Solution {
 public:
+    /*
+        i have to make the stack increasing
+    */
     string removeKdigits(string num, int k) {
         string st = "";
         for(char c: num){
