@@ -1,25 +1,30 @@
 class Solution {
 public:
-    vector<int>parr;
-    int findParr(int v){
-        return v == parr[v] ? v : (parr[v] = findParr(parr[v]));
+    void dfs(vector<int>graph[], int v, int vis[]){
+        vis[v] = 1;
+        for(auto child: graph[v]){
+            if(!vis[child])
+                dfs(graph, child, vis);
+        }
     }
     int findCircleNum(vector<vector<int>>& isConnected) {
-        int n = isConnected.size();
-        
-        for(int i=0;i<n;i++) parr.push_back(i);
-        int cnt = n;
-        for(int i=0;i<n;i++){
-            for(int j=i+1;j<n;j++){
-                if(isConnected[i][j] == 0)continue;
-                
-                int p1 = findParr(i);
-                int p2 = findParr(j);
-                
-                if(p1 != p2){
-                    parr[p1] = p2;
-                    cnt--;
+        int v = isConnected.size();
+        vector<int>graph[v];
+        for(int i=0;i<v;i++){
+            for(int j=i+1;j<v;j++){
+                if(isConnected[i][j]){
+                    graph[i].push_back(j);
+                    graph[j].push_back(i);
                 }
+            }
+        }
+        int vis[v];
+        fill(vis, vis+v, 0);
+        int cnt = 0;
+        for(int i=0;i<v;i++){
+            if(!vis[i]){
+                dfs(graph, i, vis);
+                cnt++;
             }
         }
         return cnt;
