@@ -1,31 +1,33 @@
 class Solution {
 public:
-    int orangesRotting(vector<vector<int>>& A) {
-        queue<pair<int, int>> q;
-        int M = A.size(), N = A[0].size(), step = 0, dirs[4][2] = {{0,1},{0,-1},{1,0},{-1,0}};
-        for (int i = 0; i < M; ++i) {
-            for (int j = 0; j < N; ++j) {
-                if (A[i][j] == 2) q.emplace(i, j);
-            }
+int orangesRotting(vector<vector<int>>& grid) {
+    deque<pair<int,int>>que;
+    int dir[4][2] = {{0,1},{1,0},{-1,0},{0,-1}};
+    int n = grid.size(), m  = grid[0].size();
+
+    for(int i = 0; i <n;i++){
+        for(int j = 0; j <m;j++){
+            if(grid[i][j] == 2) que.push_back({i,j});
         }
-        while (q.size()) {
-            for (int cnt = q.size(); cnt--;) {
-                auto [x, y] = q.front();
-                q.pop();
-                for (auto &[dx, dy] : dirs) {
-                    int a = x + dx, b = y + dy;
-                    if (a < 0 || a >= M || b < 0 || b >= N || A[a][b] != 1) continue;
-                    A[a][b] = 2;
-                    q.emplace(a, b);
+    }
+    int rad = 0;
+    while(que.size()){
+        int sz = que.size();;
+        while(sz--){
+            auto [x, y] = que.front();
+            que.pop_front();
+            for(auto &[dx, dy]: dir){
+                int a = x+dx, b = y+dy;
+                if(a >= 0 and b >= 0 and a<n and b<m and grid[a][b] == 1){
+                    grid[a][b] = 2;
+                    que.push_back({a,b});
                 }
             }
-            step++;
         }
-        for (auto &row : A) {
-            for (int x : row) {
-                if (x == 1) return -1;
-            }
-        }
-        return max(0, step - 1);
+        rad++;
     }
+    for(int i=0;i<n;i++) for(int j=0;j<m;j++) if(grid[i][j] == 1) return -1;
+
+    return max(0,rad-1);
+}
 };
