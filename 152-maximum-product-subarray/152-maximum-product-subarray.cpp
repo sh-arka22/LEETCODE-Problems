@@ -1,15 +1,15 @@
 class Solution {
 public:
     int maxProduct(vector<int>& nums) {
-        int minProd = 1;
-        int maxProd = 1;
-        int maxi = -(int)2e6;
-        for(auto num: nums){
-            if(num<0) swap(minProd, maxProd);
-            maxProd = max(num, maxProd*num);
-            minProd = min(num, minProd*num);
-            maxi = max(maxi, maxProd);
+        int mini = 1;
+        int maxi = 1;
+        int ans = -(int)1e9;
+        for(int it:nums){
+            if(it<0) swap(mini, maxi);
+            maxi = max(it*maxi, it);
+            mini = min(mini*it, it);
+            ans = max(ans, maxi);
         }
-        return maxi;
+        return ans;
     }
 };
