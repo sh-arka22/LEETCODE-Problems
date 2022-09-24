@@ -1,41 +1,39 @@
 class Solution {
-public:
-    int vis[101];
-    bool bfs(vector<vector<int>>& graph, int src){
-        queue<int>que;
-        que.push(src);
-        // vis[src] = 1;
-        //0->green 1->red;
+private:
+    bool bfs(vector<vector<int>>& graph, int vis[], int v){
+
         int clr = 0;
-        bool isCycle = false; bool isBipartite = true;
+        deque<int>que;
+        que.push_back(v);
         while(que.size()){
             int sz = que.size();
             while(sz--){
-                int parr = que.front();
-                que.pop();
-                if(vis[parr] != -1){
-                    isCycle = true;
-                    if(vis[parr] != clr){
-                        isBipartite = false;
+                int node = que.front();
+                que.pop_front();
+                if(vis[node] != -1){
+                    //cycle present
+                    if(vis[node] != clr){
                         return false;
                     }
                     continue;
                 }
-                vis[parr] = clr;
-                for(int child:graph[parr]){
+                vis[node] = clr;
+                for(int child:graph[node]){
                     if(vis[child] == -1)
-                        que.push(child);
+                        que.push_back(child);
                 }
             }
-            clr = (clr+1)%2;
+            clr = (clr + 1)%2;
         }
         return true;
     }
+public:
     bool isBipartite(vector<vector<int>>& graph) {
         int v = graph.size();
-        fill(vis,vis+v,-1);
-        for(int i=0;i<v;i++){
-            if(vis[i] == -1 and !bfs(graph,i))
+        int vis[v];
+        fill(vis, vis+v, -1);
+        for(int i=0; i<v; i++){
+            if(vis[i] == -1 and !bfs(graph, vis, i))
                 return false;
         }
         return true;
