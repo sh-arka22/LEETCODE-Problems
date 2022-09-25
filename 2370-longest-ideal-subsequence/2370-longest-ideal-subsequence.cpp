@@ -4,7 +4,7 @@ public:
         int dp[150] = {0};
         int maxLen = -1;
         for(int c:s){
-            dp[c]++;
+            dp[c] += 1;
             for(int j = c-k; j<=c+k;j++){
                 if(c != j){
                     dp[c] = max(dp[c], dp[j]+1);
