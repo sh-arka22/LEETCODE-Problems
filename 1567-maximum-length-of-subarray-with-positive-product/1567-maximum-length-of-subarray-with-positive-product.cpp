@@ -1,22 +1,24 @@
 class Solution {
 public:
     int getMaxLen(vector<int>& nums) {
-        int pos_len = 0, neg_len = 0, ans = 0;
-        for(int el:nums){
-            if(el == 0){
+        int pos_len = 0, neg_len = 0;
+        int prod = 1;
+        int maxLen = -1;
+        for(int it:nums){
+            if(it == 0){
                 pos_len = 0, neg_len = 0;
             }
-            else if(el>0){
+            else if(it>0){
+                if(neg_len) neg_len++;
                 pos_len ++;
-                neg_len = neg_len == 0 ? 0 : neg_len+1;
             }
             else{
-                int tmp = pos_len;
-                pos_len = neg_len == 0 ? 0 : neg_len+1;
-                neg_len = tmp+1;
+                swap(pos_len , neg_len);
+                neg_len++;
+                if(pos_len) pos_len++;
             }
-            ans = max(ans,pos_len);
+            maxLen = max(maxLen, pos_len);
         }
-        return ans;
+        return maxLen;
     }
 };
