@@ -1,28 +1,33 @@
 class Solution {
-public:
-    int *dp;
-    int recc(string s, int idx){
-    if(s[idx] == '0') return dp[idx] = 0;
-    if(idx == 0) return dp[idx] = 1;
-    
-    if(dp[idx] != -1) return dp[idx];
-    char ch1 = s[idx-1];
-    int cnt = recc(s, idx-1);
-    
-    if(idx>=2){
-        char ch2 = s[idx-2];
-        int num = (ch2-'0')*10 + (ch1-'0');
-        if(num<=26 and num>0)
-            cnt+=recc(s,idx-2);
+private:
+    vector<int>dp;
+    int recc(string &s, int I, int n){
+        for(int i = n; i>=0; i--){
+            if(s[i] == '0'){
+                dp[i] = 0;
+                continue;
+            }
+            if(i == n){
+                dp[i] = 1;
+                continue;
+            }
+            int cnt = 0;
+            char c1 = s[i];
+            cnt += dp[i+1];
+
+            if(i+1<n){
+                char c2 = s[i+1];
+                int num = (c1-'0')*10+(c2-'0');
+                if(num<=26) cnt += dp[i+2];
+            }
+            dp[i] = cnt;
+        }
+        return dp[0];
     }
-    return dp[idx] = cnt;
-}
+public:
     int numDecodings(string s) {
-    int n = s.size();
-    dp = new int[n+1];
-    fill(dp,dp+n+1, -1);
-    int ans = recc(s,n);
-    delete[] dp;
-    return ans;
-}
+        int n = s.size();
+        dp.resize(n+1,0);
+        return recc(s, 0, n);
+    }
 };
