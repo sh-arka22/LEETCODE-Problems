@@ -1,14 +1,14 @@
 class Solution {
 public:
-    vector<int> nextGreaterElements(vector<int>& nums) {
-        int n = nums.size();
-        
-        vector<int>res(n, -1);
-        deque<int>st;
-        for(int i=2*n-1; i>=0; i--){
-            while(st.size() and nums[i%n]>=st.back()) st.pop_back();
-            if(st.size()) res[i%n] = st.back();
-            st.push_back(nums[i % n]);
+    vector<int> nextGreaterElements(vector<int>& A) {
+        int n = A.size();
+        vector<int> stack, res(n, -1);
+        for (int i = 0; i < n * 2; ++i) {
+            while (stack.size() && A[stack.back()] < A[i % n]) {
+                res[stack.back()] = A[i % n];
+                stack.pop_back();
+            }
+            stack.push_back(i % n);
         }
         return res;
     }
