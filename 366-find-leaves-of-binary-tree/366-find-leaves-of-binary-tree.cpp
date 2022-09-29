@@ -10,19 +10,18 @@
  * };
  */
 class Solution {
-public:
-    vector<vector<int>>ans;
-    int dfs(TreeNode* root){
-        if(!root) return 0;
-        int height = max(dfs(root->left), dfs(root->right))+1;
-        if(height > ans.size()) ans.push_back({});
+private:
+    int dfs(TreeNode* root, vector<vector<int>>&ans){
+        if(root==NULL) return 0;
+        int height = max(dfs(root->left, ans), dfs(root->right, ans))+1;
+        if(height>ans.size()) ans.push_back({});
         ans[height-1].push_back(root->val);
-        root->left = root->right = NULL;
         return height;
     }
+public:
     vector<vector<int>> findLeaves(TreeNode* root) {
-        int height = dfs(root);
-        cout<<height;
+        vector<vector<int>>ans;
+        int res = dfs(root, ans);
         return ans;
     }
 };
