@@ -1,7 +1,7 @@
 class Solution {
 public:
     vector<int> amountPainted(vector<vector<int>>& paint) {
-        unordered_map<int,int>mp;
+        map<int,int>mp;
         int total = 0;
         int cnt = 0;
         vector<int>ans;
@@ -14,6 +14,8 @@ public:
                     cnt++;
                 }
                 else{
+                    // start = mp[start];
+                    
                     int prev_end = mp[start];
                     mp[start] = max(mp[start],end);
                     start = prev_end;   
