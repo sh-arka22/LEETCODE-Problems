@@ -24,13 +24,15 @@ public:
         if(root->left){
             graph[root->val].push_back({root->left->val,'L'});
             graph[root->left->val].push_back({root->val, 'U'});
-            createGraph(root->left, graph);
+            
         }
         if(root->right){
             graph[root->val].push_back({root->right->val,'R'});
             graph[root->right->val].push_back({root->val, 'U'});
-            createGraph(root->right, graph);
+            
         }
+        createGraph(root->right, graph);
+        createGraph(root->left, graph);
     }
     string getDirections(TreeNode* root, int startValue, int destValue) {
         int nodes = 0;
