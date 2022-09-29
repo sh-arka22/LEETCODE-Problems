@@ -1,47 +1,38 @@
 class Solution {
+        vector<int> parent;
 public:
-    vector<int>par;
-    int n;
-    
-    void make_set(int v){
-        par[v] = v;
+    int find(int p) {
+        while (p != parent[p]) {
+            parent[p] = parent[parent[p]];
+            p = parent[p];
+        }
+        return p;
     }
     
-    int find_set(int v){
-        if(par[v]==v)
-            return v;
-        return par[v] = find_set(par[v]);
-    }
-    
-    void union_set(int u, int v){
-        u = find_set(u);
-        v = find_set(v);
-        
-        par[u] =v;
+    void connect(int p, int q) {
+        int i = find(p);
+        int j = find(q);
+        parent[i] = j;
     }
     
     vector<int> amountPainted(vector<vector<int>>& paint) {
-        int maxlen = 0;
-        int minlen = INT_MAX;
-        for(auto& v:paint){
-            minlen = min(minlen, v[0]);
-            maxlen = max(maxlen, v[1]);
+        int rBound = 0;
+        for (const auto& p: paint) {
+            rBound = max(p[1], rBound);
         }
-        par.resize(maxlen+2);
+        parent = vector<int>(rBound + 1, 0);
+        iota(parent.begin(), parent.end(), 0);
         
-        for(int i=minlen; i<=maxlen+1; i++){
-            make_set(i);
-        }
-        n = paint.size();
-        vector<int>ans(n,0);
+        vector<int> ans;
         
-        for(int i=0; i< paint.size(); i++){
-            int l = paint[i][0]; int r = paint[i][1];
-            
-            for(l=find_set(l); l<r; l=find_set(l)){
-                ans[i]++;
-                union_set(l, l+1);
+        for (const auto& p: paint) {
+            int l = p[0], r = p[1];
+            int a = 0;
+            for (l = find(l); l < r; l = find(l)) {
+                ++a;
+                connect(l, l + 1);
             }
+            ans.push_back(a);
         }
         
         return ans;
