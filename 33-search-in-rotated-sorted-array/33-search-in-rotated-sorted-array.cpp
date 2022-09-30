@@ -21,7 +21,7 @@ public:
             } 
             else if(nums[low] > nums[mid]){
                 // right part is sorted
-                if(target < nums[mid] or target > nums[high]){
+                if(target < nums[mid] || target > nums[high]){
                     high = mid -1;
                 } 
                 else {
@@ -29,7 +29,7 @@ public:
                     low = mid+1;
                 }
             } 
-            else{
+            else if(nums[low] == nums[mid]){
 
                 // duplicates
                 low++; // => O(n) 111111112
