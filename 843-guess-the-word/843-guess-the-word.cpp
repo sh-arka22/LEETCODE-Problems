@@ -10,7 +10,7 @@ class Solution {
 public:
     void findSecretWord(vector<string>& words, Master& m) {
         while(true) {
-            srand (1);
+            srand (time(NULL));
             string g = words[rand() % words.size()];
             // cout << g << endl;
             int matched = m.guess(g);
