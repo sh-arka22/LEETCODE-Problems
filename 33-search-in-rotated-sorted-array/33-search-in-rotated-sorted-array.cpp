@@ -10,22 +10,26 @@ public:
             }
             // check if left part is sorted or not
             if(nums[low]  < nums[mid]){
-                if(target <nums[low] || target > nums[mid]){ // target is out of the left part boundary scope
+                if(target < nums[low] or target > nums[mid]){ // target is out of the left part boundary scope
                     low = mid +1;
 
-                } else{
+                } 
+                else{
                     // target lies within this left part
                     high = mid -1;
                 }
-            } else if(nums[low] > nums[mid]){
+            } 
+            else if(nums[low] > nums[mid]){
                 // right part is sorted
-                if(target < nums[mid] || target > nums[high]){
+                if(target < nums[mid] or target > nums[high]){
                     high = mid -1;
-                } else {
+                } 
+                else {
                     // target lies within the right part boundaries
                     low = mid+1;
                 }
-            } else{
+            } 
+            else{
 
                 // duplicates
                 low++; // => O(n) 111111112
