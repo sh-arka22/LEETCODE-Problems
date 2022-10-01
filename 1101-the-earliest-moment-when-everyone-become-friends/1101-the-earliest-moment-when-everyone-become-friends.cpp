@@ -12,7 +12,7 @@ public:
             size[i] = 1;
         }
         sort(begin(logs), end(logs));
-        
+        bool flag = false;
         int group = n;
         for(vector<int>log:logs){
             int p1 = findParr(log[1]), p2 = findParr(log[2]);
