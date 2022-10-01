@@ -2,24 +2,20 @@ class Solution {
 public:
     #define ll long long
     vector<long long> maximumEvenSplit(long long finalSum) {
-        if(finalSum&1){
-            return {};
-        }
- 
-        vector<ll> ans;
-        ll sum = 0,i = 2;
-        while(sum+i<=finalSum){
+        ll i = 2;
+        ll sum = 0;
+        vector<ll>ans;
+        if(finalSum&1) return {};
+        while(sum<finalSum){
+            sum += i;
             ans.push_back(i);
-            sum+=i;
             i+=2;
         }
- 
-        if(sum!=finalSum){ //  we can adjust one element over this position
-            sum-=ans.back();
+        if(sum != finalSum){
+            auto it = find(ans.begin(), ans.end(), sum-finalSum)- ans.begin();
+            swap(ans[it], ans[ans.size()-1]);
             ans.pop_back();
-            ans.push_back(finalSum-sum);
         }
- 
         return ans;
     }
 };
