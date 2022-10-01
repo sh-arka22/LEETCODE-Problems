@@ -12,7 +12,7 @@ public:
             i+=2;
         }
         if(sum != finalSum){
-            auto it = find(ans.begin(), ans.end(), sum-finalSum)- ans.begin();
+            int it = find(ans.begin(), ans.end(), sum-finalSum)- ans.begin();
             swap(ans[it], ans[ans.size()-1]);
             ans.pop_back();
         }
