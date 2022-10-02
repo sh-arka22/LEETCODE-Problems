@@ -18,7 +18,6 @@ private:
 public:
     int numRollsToTarget(int n, int k, int tar) {
         vector<int>coins(k);
-        vector<int>vis(k+1,0);
         dp.resize(1001, vector<int>(31,-1));
         for(int i=1;i<=k;i++) coins[i-1] = i;
         return infinitepermutation(coins, tar, n);
