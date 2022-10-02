@@ -2,7 +2,7 @@ class Solution{
 private:
     vector<vector<int>>dp;
     int infinitepermutation(vector<int>coins, int tar, int n){
-        if(n==0 or tar<=0){
+        if(n==0 or tar==0){
             if(n==0 and tar==0) return 1;
             return 0;
         }
