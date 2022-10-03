@@ -10,20 +10,18 @@
  * };
  */
 class Solution {
-private:
-    int height(TreeNode* root) {
-        if(!root) return 0;
-        return max(height(root->left) ,height(root->right))+1;
+    int height(TreeNode* node){
+        if(!node) return 0;
+        int lt = height(node->left);
+        if(lt==-1) return -1;
+        int rt = height(node->right);
+        if(rt==-1) return -1;
+        if(abs(lt-rt)>1) return -1;
+        return max(lt,rt)+1;
     }
 public:
     bool isBalanced(TreeNode* root) {
         if(!root) return 1;
-        int l_ht = height(root->left);
-        int r_ht = height(root->right);
-        cout<<root->val<<"->"<<l_ht<<" "<<r_ht<<endl;
-        if(abs(l_ht-r_ht)>1) return 0;
-        bool left = isBalanced(root->left);
-        bool right = isBalanced(root->right);
-        return (left and right);
+        return height(root) == -1 ? 0 : height(root);
     }
 };
