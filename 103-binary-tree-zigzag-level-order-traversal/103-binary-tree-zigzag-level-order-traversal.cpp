@@ -15,8 +15,8 @@ public:
         if(!root) return {};
         deque<TreeNode*>que;
         que.push_back(root);
-        vector<vector<int>>ans;
         int rad = 0;
+        vector<vector<int>>ans;
         while(que.size()){
             int sz = que.size();
             vector<int>sAns;
