@@ -16,6 +16,7 @@ public:
         deque<TreeNode*>que;
         que.push_back(root);
         vector<vector<int>>ans;
+        int rad = 0;
         while(que.size()){
             int sz = que.size();
             vector<int>sAns;
@@ -26,7 +27,9 @@ public:
                 if(top->left) que.push_back(top->left);
                 if(top->right) que.push_back(top->right);
             }
+            // if(rad%2) reverse(begin(sAns), end(sAns));
             ans.push_back(sAns);
+            rad++;
         }
         return ans;
     }
