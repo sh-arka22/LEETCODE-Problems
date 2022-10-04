@@ -17,7 +17,8 @@ private:
 
         while(mem.size()>0){
             int sz = mem.size();
-            ans.push_back(mem.back()->val);
+            ans.push_back(mem.back()->val);// right
+            // ans.push_back(mem[0]->val);//left
             while(sz-->0){
                 TreeNode* parr = mem.front();
                 mem.pop_front();
