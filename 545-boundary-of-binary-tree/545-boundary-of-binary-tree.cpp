@@ -11,44 +11,44 @@
  */
 class Solution {
 private:
-    bool isLeaf(TreeNode* root){
-        return root->left == NULL and root->right == NULL;
-    }
     void leftBoundary(TreeNode* root, vector<int>&res){
         TreeNode* curr = root->left;
         while(curr){
-            if(!isLeaf(curr)) res.push_back(curr->val);
+            if(curr->left == NULL and curr->right == NULL) return;
+            res.push_back(curr->val);
             if(curr->left) curr = curr->left;
             else curr = curr->right;
         }
     }
+    void addLeaf(TreeNode* root, vector<int>&res){
+        if(!root) return;
+        if(root->left == NULL and root->right == NULL)
+            res.push_back(root->val);
+        addLeaf(root->left, res);
+        addLeaf(root->right, res);
+    }
     void rightBoundary(TreeNode* root, vector<int>&res){
-        TreeNode* curr = root->right;
         vector<int>tmp;
+        TreeNode* curr = root->right;
         while(curr){
-            if(!isLeaf(curr)) tmp.push_back(curr->val);
+            if(curr->left == NULL and curr->right == NULL) break;
+            tmp.push_back(curr->val);
             if(curr->right) curr = curr->right;
             else curr = curr->left;
         }
-        
-        for(int i = tmp.size()-1;i>=0;i--){
+        for(int i=tmp.size()-1;i>=0;i--){
             res.push_back(tmp[i]);
         }
     }
-    void addLeaf(TreeNode* root, vector<int>&res){
-        TreeNode* curr = root;
-        if(isLeaf(curr)) res.push_back(curr->val);
-        if(curr->left) addLeaf(curr->left, res);
-        if(curr->right) addLeaf(curr->right,res);
-    }
 public:
     vector<int> boundaryOfBinaryTree(TreeNode* root) {
+        if(!root) return {};
         vector<int>res;
-        if(!isLeaf(root)) res.push_back(root->val);
+        res.push_back(root->val);
+        if(root->left==NULL and root->right==NULL) return res;
         leftBoundary(root, res);
-        addLeaf(root,res);
-        rightBoundary(root,res);
-        
+        addLeaf(root, res);
+        rightBoundary(root, res);
         return res;
     }
 };
