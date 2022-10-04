@@ -9,48 +9,36 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+class Pair{
+public:
+    TreeNode* node;
+    long long idx;
+    Pair(TreeNode* node, long long idx){
+        this->node = node;
+        this->idx = idx;
+    }
+};
 class Solution {
 public:
     int widthOfBinaryTree(TreeNode* root) {
-        if(root == NULL)
-            return 0;
-        
-        int res = 1;
-        queue<pair<TreeNode*, int>> q;
-        
-        // I am using intialising list
-        q.push({root, 0});      // also can use make_pair
-        
-        while(!q.empty())
-        {
-            int cnt = q.size();
-            // start is the index of root node for first level
-            int start = q.front().second;
-            int end = q.back().second;
-            
-            res = max(res,end-start + 1);
-            
-            for(int i = 0; i <cnt; ++i)
-            {
-                pair<TreeNode*, int> p = q.front();
-                // we will use it while inserting it children
-                // left child will be 2 * idx + 1;
-                // right chils will be 2 * idx + 2;
-                int idx = p.second - start;
-                
-                q.pop();
-                
-                // if  left child exist
-                if(p.first->left != NULL)
-                    q.push({p.first->left, (long long)2 * idx + 1});
-                
-                // if right child exist
-                if(p.first->right != NULL)
-                    q.push({p.first->right, (long long) 2 * idx + 2});
+        deque<Pair>que;
+        que.push_back(Pair(root,0));
+        long long res = -1;
+        while(que.size()){
+            int sz = que.size();
+            long long start = que.front().idx;
+            long long end = que.back().idx;
+            res = max(res, end-start+1);
+            while(sz--){
+                Pair top = que.front();
+                long long i = top.idx;
+                que.pop_front();
+                if(top.node->left)
+                    que.push_back(Pair(top.node->left, 2*(i-start)+1));
+                if(top.node->right)
+                    que.push_back(Pair(top.node->right, 2*(i-start)+2));
             }
         }
-        
         return res;
-        
     }
 };
