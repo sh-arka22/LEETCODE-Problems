@@ -26,7 +26,7 @@ public:
         return pathNode(root->left,tar,ans) or pathNode(root->right,tar,ans);
     }
     void kdown(TreeNode* root, int k, TreeNode* block, vector<int>&ans){
-        if(!root or root==block) return;
+        if(!root or root==block or k<0) return;
         if(k==0) ans.push_back(root->val);
         kdown(root->left, k-1, block, ans);
         kdown(root->right, k-1, block, ans);
