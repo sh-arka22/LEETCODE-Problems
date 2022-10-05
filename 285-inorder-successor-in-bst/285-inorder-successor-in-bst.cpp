@@ -10,19 +10,20 @@
 class Solution {
 public:
     TreeNode* inorderSuccessor(TreeNode* root, TreeNode* p) {
+        if(!root) return NULL;
+        TreeNode* ceil = NULL;
+        TreeNode* floor = NULL;
         
-        TreeNode* ans = NULL;
-        TreeNode* curr = root;
-        
-        while(curr){
-            if(curr->val > p->val){
-                ans = curr;
-                curr = curr->left;
+        while(root){
+            if(root->val<=p->val){
+                floor = root;
+                root = root->right;
             }
-            else {
-                curr = curr->right;
+            else{
+                ceil = root;
+                root = root->left;
             }
         }
-        return ans;
+        return ceil;
     }
 };
