@@ -8,46 +8,40 @@
  * };
  */
 class Solution {
-private:
-    void kdown(TreeNode *node,int k, TreeNode *block,vector<int>&ans){
-      if(node == nullptr or k<0 or node == block)
-        return;
-      if(k==0){
-        ans.push_back(node->val);
-        return;
-      }
-      kdown(node->left,k-1,block,ans);
-      kdown(node->right,k-1,block,ans);
-    }
-
-    void nodeRootPath(TreeNode* node,int data, vector<TreeNode*>&ans){
-    if(node == nullptr)
-        return;
-    if(node->val == data){
-        ans.push_back(node);
-        return;
-    }
-    if(ans.size()==0){
-        nodeRootPath(node->left,data,ans);
-    }
-    if(ans.size()==0){
-        nodeRootPath(node->right,data,ans);
-    }
-    if(ans.size()>0){
-        ans.push_back(node);
-    }
-}
 public:
+    bool pathNode(TreeNode* root, TreeNode* tar, vector<TreeNode*>&ans){
+        if(!root) return false;
+        if(root==tar){
+            ans.push_back(tar);
+            return 1;
+        }
+        if(pathNode(root->left, tar, ans)){
+            ans.push_back(root);
+            return 1;
+        }
+        if(pathNode(root->right, tar, ans)){
+            ans.push_back(root);
+            return 1;
+        }
+        return pathNode(root->left,tar,ans) or pathNode(root->right,tar,ans);
+    }
+    void kdown(TreeNode* root, int k, TreeNode* block, vector<int>&ans){
+        if(!root or root==block) return;
+        if(k==0) ans.push_back(root->val);
+        kdown(root->left, k-1, block, ans);
+        kdown(root->right, k-1, block, ans);
+    }
     vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
-      vector<TreeNode*>path;
-      nodeRootPath(root,target->val,path);
-
-      vector<int>ans;
-      TreeNode *block = nullptr;
-      for(int i=0;i<path.size();i++){
-        kdown(path[i],k-i,block,ans);
-        block = path[i];
-      }
-      return ans;
+        vector<TreeNode*>nodes;
+        bool call = pathNode(root, target, nodes);
+        vector<int>ans;
+        int i = 0;
+        TreeNode* block = NULL;
+        for(auto node:nodes){
+            kdown(node,k-i,block,ans);
+            i++;
+            block = node;
+        }
+        return ans;
     }
 };
