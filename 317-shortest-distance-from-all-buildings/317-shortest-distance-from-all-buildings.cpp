@@ -11,7 +11,7 @@ private:
         
         // Keep track of visited cells.
         vector<vector<bool>> vis (rows, vector<bool>(cols, false));
-        vis[row][col] = true;
+        
         
         int steps = 0;
         
@@ -21,7 +21,7 @@ private:
                 q.pop();
                 row = curr.first;
                 col = curr.second;
-                
+                vis[row][col] = true;
                 // If we reached an empty cell, then add the distance
                 // and increment the count of houses reached at this cell.
                 if (grid[row][col] == 0) {
