@@ -11,16 +11,17 @@ public:
         set<int>vis;
         que.push_back(0);
         vis.insert(0);
-        
+        int cnt = 0;
         while(que.size()){
             int node = que.front();
             que.pop_front();
+            cnt++;
             for(int child: graph[node]){
                 if(vis.count(child)) continue;
                 vis.insert(child);
                 que.push_back(child);
             }
         }
-        return vis.size()==n;
+        return cnt==n;
     }
 };
