@@ -14,10 +14,11 @@ public:
         int cnt = 0;
         while(que.size()){
             int sz = que.size();
+            cnt += sz;
             while(sz--){
                 int node = que.front();
                 que.pop_front();
-                cnt++;
+                // cnt++;
                 for(int child: graph[node]){
                     if(vis.count(child)) continue;
                     vis.insert(child);
