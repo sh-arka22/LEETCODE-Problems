@@ -8,7 +8,7 @@ public:
                 graph[r].push_back(k);
             }
         }
-        set<int>seen;
+        unordered_set<int>seen;
         deque<int>que;
         que.push_back(0);
         seen.insert(0);
