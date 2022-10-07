@@ -14,10 +14,10 @@ public:
         }
         
         
-        int rad = 0;
+        int rad = 1;
         while(que.size()){
             int sz = que.size();
-            rad++;
+            
             while(sz--){
                 vector<int>d = que.front();
                 int i = d[0], j = d[1];
@@ -31,6 +31,7 @@ public:
                     }
                 }
             }
+            rad++;
         }
         // return rad;
     }
