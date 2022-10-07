@@ -13,13 +13,16 @@ public:
         vis.insert(0);
         int cnt = 0;
         while(que.size()){
-            int node = que.front();
-            que.pop_front();
-            cnt++;
-            for(int child: graph[node]){
-                if(vis.count(child)) continue;
-                vis.insert(child);
-                que.push_back(child);
+            int sz = que.size();
+            while(sz--){
+                int node = que.front();
+                que.pop_front();
+                cnt++;
+                for(int child: graph[node]){
+                    if(vis.count(child)) continue;
+                    vis.insert(child);
+                    que.push_back(child);
+                }   
             }
         }
         return cnt==n;
