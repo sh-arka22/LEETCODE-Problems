@@ -37,7 +37,7 @@ class Solution {
     
     bool isPositionNotFarFromTarget(int position,int target)
     {
-        return abs(target - position) < target;
+        return (position>0 and position < 2*target);
     }
     
     bool isValidInstruction(int position,unordered_set<string> &visSet,string &key,int target)
