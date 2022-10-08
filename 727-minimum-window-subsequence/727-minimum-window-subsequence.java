@@ -7,7 +7,7 @@ class Solution {
                 j++;
             }
             if (j == T.length()) {
-                int end = i + 1;
+                int end = i;
                 j--;
                 while (j >= 0) {
                     if (S.charAt(i) == T.charAt(j)) j--;
@@ -17,7 +17,7 @@ class Solution {
                 i++;
                 if (end - i < min) {
                     min = end - i;
-                    window = S.substring(i, end);
+                    window = S.substring(i, end+1);
                 }
             }
         }
