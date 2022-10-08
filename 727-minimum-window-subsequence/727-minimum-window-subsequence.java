@@ -15,8 +15,8 @@ class Solution {
                 }
                 j++;
                 i++;
-                if (end - i < min) {
-                    min = end - i;
+                if (end - i + 1< min) {
+                    min = end - i + 1;
                     window = S.substring(i, end+1);
                 }
             }
