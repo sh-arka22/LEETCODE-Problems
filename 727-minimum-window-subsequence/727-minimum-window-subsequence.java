@@ -5,19 +5,19 @@ class Solution {
         for (int i = 0; i < S.length(); i++) {
             if (S.charAt(i) == T.charAt(j)) {
                 j++;
-                if (j == T.length()) {
-                    int end = i + 1;
-                    j--;
-                    while (j >= 0) {
-                        if (S.charAt(i) == T.charAt(j)) j--;
-                        i--;
-                    }
-                    j++;
-                    i++;
-                    if (end - i < min) {
-                        min = end - i;
-                        window = S.substring(i, end);
-                    }
+            }
+            if (j == T.length()) {
+                int end = i + 1;
+                j--;
+                while (j >= 0) {
+                    if (S.charAt(i) == T.charAt(j)) j--;
+                    i--;
+                }
+                j++;
+                i++;
+                if (end - i < min) {
+                    min = end - i;
+                    window = S.substring(i, end);
                 }
             }
         }
