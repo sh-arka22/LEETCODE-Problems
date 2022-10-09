@@ -1,24 +1,54 @@
 class Solution {
-public:
+private:
     int dirs[4][2] = {{-1,0},{0,-1},{1,0},{0,1}};
-    //max waiting time
-    #define MAX_T 1e9
+    void spreadFire(vector<vector<int>>&fire){
+        int n = fire.size(), m = fire[0].size();
+        deque<array<int,2>>queue;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(fire[i][j]==1){
+                    queue.push_back({i,j});
+                    fire[i][j] = 0;
+                }
+                else if(fire[i][j]==2)
+                    fire[i][j] = -1;
+            }
+        }
         
-    struct triplet{  // for storing tripet in queue
-        long r,c,t;
-    };
-    
-    //for checking if we wait maxT min at initial pos then, 
-    //is it possible to reach to home or not?
-    bool isPossible(long maxT,  vector<vector<int>> &fire, vector<vector<int>> &directions){
+        vector<vector<int>>vis(n, vector<int>(m,0));
+        while(queue.size()){
+            int sz = queue.size();
+            while(sz--){
+                auto [row,col] = queue.front(); queue.pop_front();
+                vis[row][col] = 1;
+                for(auto [dr, dc]: dirs){
+                    int newRow = row+dr, newCol = col+dc;
+                    if(newRow<0 or newCol<0 or newRow>=n or newCol>=m or fire[newRow][newCol] == -1 or vis[newRow][newCol]) continue;
+                    vis[newRow][newCol] = 1;
+                    fire[newRow][newCol] = fire[row][col]+1;
+                    queue.push_back({newRow,newCol});
+                }
+            }
+        }
+    }
+    void updateFire(vector<vector<int>>&fire){
+        int n = fire.size(), m = fire[0].size();
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(fire[i][j] == 0)
+                    fire[i][j] = INT_MAX;
+            }
+        }
+    }
+    bool isPossible(vector<vector<int>> &fire, int maxT){
         int m=fire.size();
         int n=fire[0].size();
-        
+        vector<vector<int>> directions = {{-1,0},{0,-1},{1,0},{0,1}};
         vector<vector<bool>> visited(m, vector<bool>(n, false));
         
         visited[0][0]=true; // mark start idx as visited
         
-        queue<triplet> q;
+        queue<array<int,3>> q;
         q.push({0,0,maxT}); 
         
         while(!q.empty()){
@@ -44,71 +74,23 @@ public:
             }
         }
         
-        //Spiderman: No way Home :(
-        
         return false; //cannot reach if waited maxT min at initial pos/no way possibe
     }
-    
+public:
     int maximumMinutes(vector<vector<int>>& grid) {
-        int m=grid.size();
-        int n=grid[0].size();
-        
-        vector<vector<int>> fire(m,vector<int>(n, INT_MAX));
-        //stores the time to reach fire at a pos, intially infinite Time
-        
-        queue<pair<int,int>> q; 
-      
-        for(int i=0;i<m;i++){
-            for(int j=0;j<n;j++){
-                if(grid[i][j]==1){ //if fire cell
-                    fire[i][j]=0;  // the cells which are on fire in the start
-                    q.push({i,j});
-                }    
-                else if(grid[i][j]==2) // fire cannot reach the wall cells
-                {
-                    fire[i][j]=-1;  // so store -1 if wall is there 
-                }
+        vector<vector<int>>fire = grid;
+        spreadFire(fire);
+        updateFire(fire);
+        int l = 0, r = (int)1e9, ans = -1;
+        while(l<=r){
+            int mid = l + (r-l)/2;
+            if(isPossible(fire, mid)){
+                ans = max(mid,ans);
+                l = mid+1;
             }
-        }
-
-        //for going in all 4 directions
-        vector<vector<int>> directions={{-1,0},{0,-1},{1,0},{0,1}};
-        vector<vector<int>>vis(m, vector<int>(n,0));
-        while(q.size()){
-            int sz = q.size();
-            while(sz--){
-                auto [row,col]=q.front();
-                vis[row][col] = 1;
-                q.pop();
-                for(auto [dr, dc]: dirs){
-                    int newRow = row+dr, newCol = col+dc;
-                    if(newRow<0 or newCol<0 or newRow>=m or newCol>=n or fire[newRow][newCol] == -1 or vis[newRow][newCol]) continue;
-                    vis[newRow][newCol] = 1;
-                    fire[newRow][newCol] = fire[row][col]+1;
-                    q.push({newRow,newCol});
-                }
-            }
+            else r = mid-1;
         }
         
-        //Use Binary seach to find the maxWaiting Time
-        //Our search space will be from 0 to 10^9 min
-        
-        long l=0, h=MAX_T, maxWaitingTime=-1;
-        
-        while(l<=h){
-            long mid=l+(h-l)/2;
-            if(isPossible(mid, fire, directions))
-            {
-                //store the max time till now which is possible
-                maxWaitingTime=max(maxWaitingTime,mid);
-                // if we can wait this longer then try to wait longer
-                l=mid+1;
-            }else{
-                //check for waitaing for shorter period instead
-                h=mid-1;
-            }
-        }
-        
-        return maxWaitingTime;
+        return ans;
     }
 };
