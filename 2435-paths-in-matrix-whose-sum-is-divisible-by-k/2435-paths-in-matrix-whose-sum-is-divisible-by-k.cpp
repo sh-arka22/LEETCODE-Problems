@@ -12,7 +12,7 @@ class Solution {
         for(auto [dr,dc]:dir){
             int newRow = i+dr, newCol = j+dc;
             if(newRow<0 or newCol<0) continue;
-            cnt = (cnt + dfs(grid, k, newRow, newCol, sum+grid[newRow][newCol]))%1000000007;
+            cnt = (cnt + dfs(grid, k, newRow, newCol, sum+grid[newRow][newCol])%1000000007)%1000000007;
         }
         return dp[i][j][sum%k] = cnt;
     }
