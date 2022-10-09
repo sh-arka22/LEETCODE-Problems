@@ -1,6 +1,6 @@
 class Solution {
 public:
-    
+    int dirs[4][2] = {{-1,0},{0,-1},{1,0},{0,1}};
     //max waiting time
     #define MAX_T 1e9
         
@@ -73,24 +73,21 @@ public:
 
         //for going in all 4 directions
         vector<vector<int>> directions={{-1,0},{0,-1},{1,0},{0,1}};
-        
-        while(!q.empty()){
-            auto [row,col]=q.front();
-            q.pop();
-                
-            for(int j=0;j<directions.size();j++){
-                int newRow=row + directions[j][0];
-                int newCol=col + directions[j][1];
-                
-                // fire[newRow][newCOl]=-1 -> wall cell 
-                if(min(newRow,newCol)>=0 && newRow<m && newCol<n && fire[newRow][newCol]!=-1){ // is valid coord.
-                    if(fire[newRow][newCol] > fire[row][col] + 1){ // if previously stored time was greater 
-                   
-                      fire[newRow][newCol]= fire[row][col] +1 ; 
-                      q.push({newRow,newCol});
-                   }
+        vector<vector<int>>vis(m, vector<int>(n,0));
+        while(q.size()){
+            int sz = q.size();
+            while(sz--){
+                auto [row,col]=q.front();
+                vis[row][col] = 1;
+                q.pop();
+                for(auto [dr, dc]: dirs){
+                    int newRow = row+dr, newCol = col+dc;
+                    if(newRow<0 or newCol<0 or newRow>=m or newCol>=n or fire[newRow][newCol] == -1 or vis[newRow][newCol]) continue;
+                    vis[newRow][newCol] = 1;
+                    fire[newRow][newCol] = fire[row][col]+1;
+                    q.push({newRow,newCol});
                 }
-            } 
+            }
         }
         
         //Use Binary seach to find the maxWaiting Time
