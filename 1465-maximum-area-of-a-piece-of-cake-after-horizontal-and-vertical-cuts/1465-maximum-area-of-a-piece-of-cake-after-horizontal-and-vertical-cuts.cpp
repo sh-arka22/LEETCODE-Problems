@@ -13,7 +13,7 @@ public:
         for(int i=1;i<m;i++){
             max_c = max(max_c, verticalCuts[i]-verticalCuts[i-1]);
         }
-        long long var = (long long)(max_h%1000000007) * (long long)(max_c%1000000007);
-        return (var)%1000000007;
+        
+        return ((long)max_h * max_c) % (1000000007);
     }
 };
