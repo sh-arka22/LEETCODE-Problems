@@ -14,6 +14,6 @@ public:
             max_c = max(max_c, verticalCuts[i]-verticalCuts[i-1]);
         }
         
-        return ((long)max_h * max_c) % (1000000007);
+        return (((long)max_h * (long)max_c) % (1000000007));
     }
 };
