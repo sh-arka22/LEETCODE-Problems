@@ -13,7 +13,7 @@ int recc(vector<int>& nums,int idx, int k, int sumSF, int tar){
         if(vis[i]) continue;
 
         vis[i] = 1;
-        res += recc(nums, i+1, k, sumSF+nums[i], tar);
+        res = res or recc(nums, i+1, k, sumSF+nums[i], tar);
         vis[i] = 0;
     }
     return res;
