@@ -11,14 +11,17 @@ bool found(int V, vector<int> adj[], int n){
     deque<int> que;
 
     que.push_back(V);
-    
+    bool flag = false;
 
     while(que.size()){
         int sz = que.size();
         while(sz--){
             int parr = que.front();
             que.pop_front();
-            if(vis[parr] == 1) return true;
+            if(vis[parr] == 1){
+                flag = 1;
+                continue;
+            }
 
             vis[parr] = 1;
             for(int child:adj[parr]){
@@ -27,7 +30,7 @@ bool found(int V, vector<int> adj[], int n){
             }
         }
     }
-    return false;
+    return flag;
 }
 
 bool isCycle(int V, vector<int> adj[]) {
