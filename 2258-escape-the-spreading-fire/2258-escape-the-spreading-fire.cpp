@@ -80,7 +80,7 @@ public:
     int maximumMinutes(vector<vector<int>>& grid) {
         vector<vector<int>>fire = grid;
         spreadFire(fire);
-        updateFire(fire); // updateing all the unrechable cells to INT_MAX
+        updateFire(fire);
         int l = 0, r = (int)1e9, ans = -1;
         while(l<=r){
             int mid = l + (r-l)/2;
