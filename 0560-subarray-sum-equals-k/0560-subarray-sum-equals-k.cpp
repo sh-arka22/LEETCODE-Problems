@@ -6,10 +6,10 @@ public:
 
         int i = 0, cnt = 0;
         unordered_map<int, int> prefixsum;
+        prefixsum[0] = 1;
         int sum = 0;
         while(i<n) {
             sum+=nums[i];
-            if(sum==k) cnt++;
             if(prefixsum.find(sum-k)!=prefixsum.end()) cnt+=prefixsum[sum-k];
             i++;
             prefixsum[sum]++;
