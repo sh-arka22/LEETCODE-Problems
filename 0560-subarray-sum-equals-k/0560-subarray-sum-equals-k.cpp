@@ -10,9 +10,13 @@ public:
         int sum = 0;
         while(i<n) {
             sum+=nums[i];
-            if(prefixsum.find(sum-k)!=prefixsum.end()) cnt+=prefixsum[sum-k];
+            if(prefixsum.find(sum-k)!=prefixsum.end()) 
+                cnt+=prefixsum[sum-k];
+            if(prefixsum.find(sum)==prefixsum.end()){
+                prefixsum[sum] = 1;
+            }
+            else prefixsum[sum] += 1;
             i++;
-            prefixsum[sum]++;
         }
         return cnt;
     }
