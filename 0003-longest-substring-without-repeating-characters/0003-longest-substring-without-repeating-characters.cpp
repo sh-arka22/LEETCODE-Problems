@@ -7,7 +7,7 @@ private:
         int l = 0, r = 0;
         while(r<n){
             mp[s[r]]++;
-            while(mp[s[r]]>k){
+            while(mp[s[r]]>1){
                 mp[s[l]]--;
                 if(mp[s[l]] == 0)
                     mp.erase(mp[s[l]]);
