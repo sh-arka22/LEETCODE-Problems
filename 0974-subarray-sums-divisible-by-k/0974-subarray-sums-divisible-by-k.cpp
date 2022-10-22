@@ -9,11 +9,13 @@ public:
         for(int i=0;i<n;i++){
             sum += nums[i];
             int rem = (k + sum%k)%k;
-            // if(rem<0) rem+=k;
-            if(mp[rem]){
+            if(mp.find(rem) != mp.end()){
                 cnt += mp[rem];
             }
-            mp[rem]++;
+            if(mp.find(rem) == mp.end()){
+                mp[rem] = 1;
+            }
+            else mp[rem]++;
         }
         return cnt;
     }
