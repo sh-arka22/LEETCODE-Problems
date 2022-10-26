@@ -13,7 +13,7 @@ public:
             for (int i = 0; i < W; i++) {
                 if (m[cur+i] == 0)
                     return false;   
-                else if (--m[cur+i] < 1)
+                else if (--m[cur+i] == 0)
                     m.erase(cur+i);
             }
         }
