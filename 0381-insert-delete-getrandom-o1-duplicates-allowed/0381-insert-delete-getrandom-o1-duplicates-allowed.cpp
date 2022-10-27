@@ -1,47 +1,28 @@
 class RandomizedCollection {
 public:
     
-    vector<pair<int, int>>a;
-    unordered_map<int, vector<int>> mp;
-    
-    RandomizedCollection() {
-        
+    vector<int> v;
+  unordered_map<int, unordered_set<int>> m;
+  bool insert(int val) {
+    v.push_back(val);
+    m[val].insert(v.size() - 1);
+    return m[val].size() == 1;
+  }
+  bool remove(int val) {
+    auto it = m.find(val);
+    if (it != end(m)) {
+      auto free_pos = *it->second.begin();
+      it->second.erase(it->second.begin());
+      v[free_pos] = v.back();
+      m[v.back()].insert(free_pos);
+      m[v.back()].erase(v.size() - 1);
+      v.pop_back();
+      if (it->second.size() == 0) m.erase(it);
+      return true;
     }
-    
-    bool insert(int val) {
-        auto it=mp.find(val);
-        if(it == mp.end())
-        {
-            mp[val].push_back(a.size());
-            a.push_back(make_pair(val, mp[val].size()-1));
-            return true;
-        }
-        else{
-            mp[val].push_back(a.size());
-            a.push_back(make_pair(val, mp[val].size()-1));
-            return false;
-        }
-    }
-    
-    bool remove(int val) {
-        auto it=mp.find(val);
-        if(it != mp.end()){
-            auto last = a.back();
-            mp[last.first][last.second] = mp[val].back();
-            a[mp[val].back()] = last;
-            mp[val].pop_back();
-            if(mp[val].empty())
-                mp.erase(val);
-            a.pop_back();
-            return true;
-        }
-        return false;
-         
-    }
-    
-    int getRandom() {
-        return a[rand()%a.size()].first;
-    }
+    return false;
+  }
+  int getRandom() { return v[rand() % v.size()]; }
 };
 
 /**
