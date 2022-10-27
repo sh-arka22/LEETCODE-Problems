@@ -1,39 +1,22 @@
 class Solution {
 public:
-    unordered_map<int,int> mp;
-    int valid_nums=0;
-    Solution(int n, vector<int>& blacklist) {
-        
-        set<int> st;
-        
-        for(auto &x : blacklist) st.insert(x);
-		
-        valid_nums = n-st.size();
-        int idx = valid_nums; 
-        
-        for(auto &x:st)
-        {
-            if(x<valid_nums)
-            {
-                while(st.count(idx)) idx++; 
-				mp[x] = idx++;
-            }      
-        } 
+
+    unordered_map<int, int> m;
+    int wlen;
+
+    Solution(int n, vector<int> b) {
+        wlen = n - b.size();
+        unordered_set<int> w;
+        for (int i = wlen; i < n; i++) w.insert(i);
+        for (int x : b) w.erase(x);
+        auto wi = w.begin();
+        for (int x : b)
+            if (x < wlen)
+                m[x] = *wi++;
     }
-    
+
     int pick() {
-        int ans = rand()%valid_nums;
-        
-        if(mp.count(ans))
-            return mp[ans];
-        
-        return ans;
-        
+        int k = rand() % wlen;
+        return m.count(k) ? m[k] : k;
     }
 };
-
-/**
- * Your Solution object will be instantiated and called as such:
- * Solution* obj = new Solution(n, blacklist);
- * int param_1 = obj->pick();
- */
