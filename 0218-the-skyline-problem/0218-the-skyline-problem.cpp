@@ -1,39 +1,31 @@
 class Solution {
 public:
     vector<vector<int>> getSkyline(vector<vector<int>>& buildings) {
-        vector<vector<int>> ans;
-        multiset<int> pq{0};
-        
-        vector<pair<int, int>> points;
-        
-        for(auto b: buildings){
-            points.push_back({b[0], -b[2]});
-            points.push_back({b[1], b[2]});
+        vector<pair<int,int>>processed;
+        for(auto &v:buildings){
+            processed.push_back({v[0],-v[2]});
+            processed.push_back({v[1], v[2]});
         }
+        sort(begin(processed), end(processed));
         
-        sort(points.begin(), points.end());
+        multiset<int>pq;
+        vector<vector<int>>ans;
         
-        int ongoingHeight = 0;
-        
-        // points.first = x coordinate, points.second = height
-        for(int i = 0; i < points.size(); i++){
-            int currentPoint = points[i].first;
-            int heightAtCurrentPoint = points[i].second;
-            
-            if(heightAtCurrentPoint < 0){
-                pq.insert(-heightAtCurrentPoint);
-            } else {
-                pq.erase(pq.find(heightAtCurrentPoint));
+        pq.insert(0);
+        int currHeight = 0;
+        for(auto [point, height]:processed){
+            if(height<0){
+                pq.insert(-1*height);
             }
-            
-            // after inserting/removing heightAtI, if there's a change
-            auto pqTop = *pq.rbegin();
-            if(ongoingHeight != pqTop){
-                ongoingHeight = pqTop;
-                ans.push_back({currentPoint, ongoingHeight});
+            else{
+                pq.erase(pq.find(height));
+            }
+            int Top = *pq.rbegin();
+            if(currHeight!=Top){
+                currHeight=Top;
+                ans.push_back({point,currHeight});
             }
         }
-        
         return ans;
     }
 };
