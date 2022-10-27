@@ -36,13 +36,13 @@ public:
                         }
                     }
                 }
-                while(j+1<n && nums[j+1]==nums[j]){
-                        ++j;
-                    }
+                int a = j+1;
+                while(a<n and nums[j]==nums[a]) a++;
+                j=--a;
             }
-            while(i+1<n && nums[i+1]==nums[i]){
-                    ++i;
-                }
+            int b = i+1;
+            while(b<n && nums[i]==nums[b]) b++;
+            i=--b;
         }
         return res;
     }
