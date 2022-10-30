@@ -3,8 +3,8 @@ public:
     int maxPoints(vector<vector<int>>& points) {
         int ans = 0;
         int n = points.size();
-        if(n < 3)
-            return n;
+        // if(n < 3)
+        //     return n;
         for(int i = 0;i<n;i++){
             map<array<int,2>, int> mp;
             for(int  j = 0;j<n;j++){
