@@ -1,16 +1,14 @@
 class Solution {
 private:
     int lengthOfLongestSubstringWithkRepeating(string &s, int k){
-        unordered_map<char,int>mp;
+        vector<int>mp(128,0);
         int n = size(s);
         int len = 0;
         int l = 0, r = 0;
         while(r<n){
             mp[s[r]]++;
-            while(mp[s[r]]>1){
+            while(mp[s[r]]>k){
                 mp[s[l]]--;
-                if(mp[s[l]] == 0)
-                    mp.erase(mp[s[l]]);
                 l++;
             }
             len = max(len, r-l+1);
