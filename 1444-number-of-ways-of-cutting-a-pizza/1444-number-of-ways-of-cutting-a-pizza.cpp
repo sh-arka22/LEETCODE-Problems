@@ -19,22 +19,22 @@ public:
         if (dp[i][j][k] != -1)
             return dp[i][j][k];
 
-        dp[i][j][k] = 0;
+        int cnt = 0;
 
         int h, v;
         for (h = i + 1; h < r; h++) {
             if (t[i][j] - t[h][j] > 0 && t[h][j] >= k - 1) {
-                dp[i][j][k] = (dp[i][j][k] % m + pizza_cut(h, j, k - 1, r, c, t, dp) % m) % m;
+                cnt = (cnt % m + pizza_cut(h, j, k - 1, r, c, t, dp) % m) % m;
             }
         }
 
         for (v = j + 1; v < c; v++) {
             if (t[i][j] - t[i][v] > 0 && t[i][v] >= k - 1) {
-                dp[i][j][k] = (dp[i][j][k] % m + pizza_cut(i, v, k - 1, r, c, t, dp) % m) % m;
+                cnt = (cnt % m + pizza_cut(i, v, k - 1, r, c, t, dp) % m) % m;
             }
         }
 
-        return dp[i][j][k];
+        return dp[i][j][k]=cnt;
     }
 
     int ways(vector<string> &pizza, int k) {
