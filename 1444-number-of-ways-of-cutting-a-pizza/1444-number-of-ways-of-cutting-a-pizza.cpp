@@ -1,9 +1,3 @@
-//PROBLEM LINK
-// https://leetcode.com/problems/number-of-ways-of-cutting-a-pizza/
-
-//DO NOT SUBMIT THIS CODE, THIS IS TO LOOK, IF YOU GET STUCK SOMEWHERE
-// #define m 1000000007
-
 static int m = 1e9 + 7;
 class Solution {
 public:
