@@ -46,7 +46,6 @@ public:
 
         for (i = r - 1; i >= 0; i--) {
             for (j = c - 1; j >= 0; j--) {
-
                 int diag = (i + 1 == r || j + 1 == c) ? 0 : t[i + 1][j + 1];
                 int down = (i + 1 == r) ? 0 : t[i + 1][j];
                 int right = (j + 1 == c) ? 0 : t[i][j + 1];
