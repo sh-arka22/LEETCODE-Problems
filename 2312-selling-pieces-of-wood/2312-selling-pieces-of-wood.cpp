@@ -11,7 +11,7 @@ class Solution {
         }
         
         if (dp[rows][cols] != -1) return dp[rows][cols];
-        // dp[rows][cols] = prices[rows][cols]; 
+         
         ll ans = prices[rows][cols];
         for (int row = 0; row < rows/2; row ++) {
             ans = max (ans, MaxPrice (row+1, cols, prices) + MaxPrice (rows-row-1, cols, prices));
