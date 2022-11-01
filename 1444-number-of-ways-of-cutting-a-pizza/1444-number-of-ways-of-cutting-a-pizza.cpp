@@ -1,51 +1,27 @@
-static int m = 1e9 + 7;
 class Solution {
 public:
-    int pizza_cut(int i, int j, int k, int r, int c, vector<vector<int>> &t, vector<vector<vector<int>>> &dp) {
-
-        if (t[i][j] < k)
-            return 0;
-
-        if (k == 1) {
-            return (t[i][j] >= 1) ? 1 : 0;
-        }
-
-        if (dp[i][j][k] != -1)
-            return dp[i][j][k];
-
-        int cnt = 0;
-
-        int h, v;
-        for (h = i + 1; h < r; h++) {
-            if (t[i][j] - t[h][j] > 0 && t[h][j] >= k - 1) {
-                cnt = (cnt % m + pizza_cut(h, j, k - 1, r, c, t, dp) % m) % m;
-            }
-        }
-
-        for (v = j + 1; v < c; v++) {
-            if (t[i][j] - t[i][v] > 0 && t[i][v] >= k - 1) {
-                cnt = (cnt % m + pizza_cut(i, v, k - 1, r, c, t, dp) % m) % m;
-            }
-        }
-
-        return dp[i][j][k]=cnt;
+    int ways(vector<string>& pizza, int k) {
+        int m = pizza.size(), n = pizza[0].size();
+        vector<vector<vector<int>>> dp = vector(k, vector(m, vector(n, -1)));
+        vector<vector<int>> preSum = vector(m+1, vector(n+1, 0)); // preSum[r][c] is the total number of apples in pizza[r:][c:]
+        for (int r = m - 1; r >= 0; r--)
+            for (int c = n - 1; c >= 0; c--)
+                preSum[r][c] = preSum[r][c+1] + preSum[r+1][c] - preSum[r+1][c+1] + (pizza[r][c] == 'A');
+        return dfs(m, n, k-1, 0, 0, dp, preSum);
     }
-
-    int ways(vector<string> &pizza, int k) {
-        int r = pizza.size();
-        int c = pizza[0].length();
-        int i, j;
-        vector<vector<int>> t(r, vector<int>(c, 0));
-        vector<vector<vector<int>>> dp(r, vector<vector<int>>(c, vector<int>(k + 1, -1)));
-
-        for (i = r - 1; i >= 0; i--) {
-            for (j = c - 1; j >= 0; j--) {
-                int diag = (i + 1 == r || j + 1 == c) ? 0 : t[i + 1][j + 1];
-                int down = (i + 1 == r) ? 0 : t[i + 1][j];
-                int right = (j + 1 == c) ? 0 : t[i][j + 1];
-                t[i][j] = down + right - diag + (pizza[i][j] == 'A');
-            }
-        }
-        return pizza_cut(0, 0, k, r, c, t, dp);
+    int dfs(int m, int n, int k, int r, int c, vector<vector<vector<int>>>& dp, vector<vector<int>>& preSum) {
+        if (preSum[r][c] == 0) return 0; // if the remain piece has no apple -> invalid
+        if (k == 0) return 1; // found valid way after using k-1 cuts
+        if (dp[k][r][c] != -1) return dp[k][r][c];
+        int ans = 0;
+        // cut in horizontal
+        for (int nr = r + 1; nr < m; nr++) 
+            if (preSum[r][c] - preSum[nr][c] > 0) // cut if the upper piece contains at least one apple
+                ans = (ans + dfs(m, n, k - 1, nr, c, dp, preSum)) % 1000000007;
+        // cut in vertical
+        for (int nc = c + 1; nc < n; nc++) 
+            if (preSum[r][c] - preSum[r][nc] > 0) // cut if the left piece contains at least one apple
+                ans = (ans + dfs(m, n, k - 1, r, nc, dp, preSum)) % 1000000007;
+        return dp[k][r][c] = ans;
     }
 };
