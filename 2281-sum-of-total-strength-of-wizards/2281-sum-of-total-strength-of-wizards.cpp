@@ -1,7 +1,7 @@
 class Solution {
 public:
     int totalStrength(vector<int>& st) {
-        long long MOD = 1'000'000'007;
+        long long MOD = 1000000007;
         const int N = st.size();
         // sum of first k elements
         vector<long long> prefix(N + 1, 0L);
