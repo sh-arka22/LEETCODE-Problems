@@ -16,11 +16,11 @@ public:
         int ans = 0;
         // cut in horizontal
         for (int nr = r + 1; nr < m; nr++) 
-            if (preSum[r][c] - preSum[nr][c] > 0) // cut if the upper piece contains at least one apple
+            if (preSum[r][c] - preSum[nr][c] >= 1) // cut if the upper piece contains at least one apple
                 ans = (ans + dfs(m, n, k - 1, nr, c, dp, preSum)) % 1000000007;
         // cut in vertical
         for (int nc = c + 1; nc < n; nc++) 
-            if (preSum[r][c] - preSum[r][nc] > 0) // cut if the left piece contains at least one apple
+            if (preSum[r][c] - preSum[r][nc] >= 1) // cut if the left piece contains at least one apple
                 ans = (ans + dfs(m, n, k - 1, r, nc, dp, preSum)) % 1000000007;
         return dp[k][r][c] = ans;
     }
