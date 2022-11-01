@@ -1,10 +1,7 @@
-using ll = long long int;
-const int N = 201;
-
-vector<vector<ll>> dp (N, vector<ll>(N, -1));
-
 class Solution {
-    // , const int minRow, const int minCol
+private:
+    using ll = long long int;
+    vector<vector<ll>> dp;
     ll MaxPrice (int rows, int cols, const vector<vector<int>>& prices) {
         if (rows == 1 && cols == 1) {
             return prices[rows][cols];
@@ -25,9 +22,8 @@ class Solution {
     
 public:
     long long sellingWood(int m, int n, vector<vector<int>>& prices) {
-        for (auto &i : dp)
-            for (auto &j : i) j = -1;
         
+        dp.resize(m+1, vector<ll>(n+1,-1));
         vector<vector<int>> price (m+1, vector<int>(n+1));
         for (auto i : prices) price[i[0]][i[1]] = i[2];
         
