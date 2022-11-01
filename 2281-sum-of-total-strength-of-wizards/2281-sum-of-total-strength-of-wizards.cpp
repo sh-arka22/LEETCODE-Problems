@@ -4,7 +4,7 @@ public:
         long long MOD = 1000000007;
         const int N = st.size();
         // sum of first k elements
-        vector<long long> prefix(N + 1, 0L);
+        vector<long long> prefix(N + 1, 0l);
         for (int i = 0; i < N; ++i) {
             prefix[i + 1] = (prefix[i] + st[i]) % MOD;
         }
