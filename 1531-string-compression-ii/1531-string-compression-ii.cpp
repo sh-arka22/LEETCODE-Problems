@@ -3,16 +3,15 @@ class Solution {
 public:
     string str;
     int n;
-    int minLength(int i, int prev, int len, int k)
-    {
+    int minLength(int i, int prev, int len, int k) {
         if(k<0)    return INT_MAX;
         if(i>=n)    return 0;
         if(dp[i][prev][len][k] != -1)   return dp[i][prev][len][k];
         int ifDelete = minLength(i+1,prev,len,k-1);
         int keep = 0;
-        if(str[i]-'a' == prev)
-        {
-            if(len==1 || len==9 || len==99)     keep++;
+        if(str[i]-'a' == prev) {
+            if(len==1 || len==9 || len==99) 
+                keep++;
             keep += minLength(i+1, prev, len+1, k);
         }
         else    keep = 1 + minLength(i+1, str[i]-'a', 1, k);
