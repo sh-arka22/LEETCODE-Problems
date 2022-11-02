@@ -5,7 +5,7 @@ public:
     int n;
     int minLength(int i, int prev, int len, int k) {
         if(k<0)    return 1e9;
-        if(i>=n)    return 0;
+        if(i==n)    return 0;
         if(dp[i][prev][len][k] != -1)   return dp[i][prev][len][k];
         int ifDelete = minLength(i+1,prev,len,k-1);
         int keep = 0;
