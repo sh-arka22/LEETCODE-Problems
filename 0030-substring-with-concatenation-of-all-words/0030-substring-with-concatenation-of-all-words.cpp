@@ -12,9 +12,9 @@ public:
             for(int j=0;j<words.size();j++){
                 string str = s.substr(i+j*len,len);
                 if(copyMap.count(str)){
-                    int cnt = copyMap[str];
+                    int &cnt = copyMap[str];
                     if(cnt == 1) copyMap.erase(str);
-                    else copyMap[str]--;
+                    else cnt--;
                 }
                 else break;
                 if(copyMap.size()==0){
