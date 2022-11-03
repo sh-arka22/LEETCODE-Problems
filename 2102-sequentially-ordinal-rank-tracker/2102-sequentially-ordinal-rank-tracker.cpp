@@ -1,6 +1,6 @@
 class SORTracker  {
 public:
-    typedef set<pair<int, string>>::iterator iter;
+    using iter = set<pair<int, string>>::iterator;
     set<pair<int, string>> s;
     iter it = end(s);    
     void add(string name, int score) {
