@@ -3,7 +3,7 @@ public:
     set<pair<int, string>> s;
     set<pair<int, string>>::iterator it = end(s);    
     void add(string name, int score) {
-        auto it1 = s.insert({-score, name}).first;
+        auto [it1,flag] = s.insert({-score, name});
         if (it == end(s) || *it1 < *it)
             --it;
     }
