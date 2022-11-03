@@ -20,7 +20,8 @@ class Solution {
     }
 public:
     int largestComponentSize(vector<int>& nums) {
-        for(int i=0;i<=100001;i++){
+        int ele = *max_element(begin(nums),end(nums));
+        for(int i=0;i<=ele;i++){
             par.push_back(i);
         }
         for(int i=0;i<nums.size();i++)
