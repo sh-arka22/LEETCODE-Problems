@@ -7,7 +7,7 @@ public:
         
         if(i < 0 || i >= n || j < 0 || j >= m)
             return 1;
-        if(x <= 0)
+        if(x == 0)
             return 0;
         if(dp[i][j][x] != -1)
             return dp[i][j][x];
