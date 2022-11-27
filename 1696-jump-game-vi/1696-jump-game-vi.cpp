@@ -1,22 +1,18 @@
 class Solution {
 public:
     int maxResult(vector<int>& nums, int k) {
-        int len = nums.size();
-        vector<int> dp(nums.size(), -1);
-        
-        dp[len-1] = nums[len-1];
-        multiset<int> ms;
-        ms.insert(dp[len-1]);
-        
-        for(int i=len-2;i>=0; --i) {
-			// Erase the oldest value i.e. the one which was inserted the earliest => i+k+1
-            if(ms.size() > k) {
-                ms.erase(ms.find(dp[i+k+1]));
+        int n = size(nums);
+        vector<int>dp(n,-1);
+        dp[0] = nums[0];
+        multiset<int>st;
+        st.insert(nums[0]);
+        for(int i=1;i<n;i++){
+            dp[i] = nums[i]+*st.rbegin();
+            st.insert(dp[i]);
+            if(st.size()>=k+1){
+                st.erase(st.find(dp[i-k]));
             }
-            dp[i] = *ms.rbegin()+nums[i];
-            ms.insert(dp[i]);
         }
-        
-        return dp[0];
+        return dp[n-1];
     }
 };
