@@ -5,7 +5,6 @@ public:
         int n = size(regular);
         vector<ll>expdp(n+1);
         vector<ll>regdp(n+1);
-
         expdp[0] = expressCost;
         regdp[0] = 0;
         vector<ll>ans;
