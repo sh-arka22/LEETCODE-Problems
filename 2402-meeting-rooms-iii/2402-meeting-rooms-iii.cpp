@@ -7,16 +7,16 @@ public:
             return (a[0]==b[0]? a[1]>b[1] : a[0]>b[0]);
         };
         priority_queue<array<ll,2>, vector<array<ll,2>>, decltype(cmp)>pq(cmp);
-        for(int i=0;i<n;i++) pq.push({0,i});
+        for(int i=0;i<n;i++) pq.push({0,i}); //endTime, idx
         vector<ll>freq(n,0);
         for(auto &meet:meetings){
             while(pq.top()[0]<meet[0]){
-                pq.push({meet[0], pq.top()[1]});
+                pq.push({meet[0], pq.top()[1]}); //updating the end time
                 pq.pop();
             }
-            auto [dur, idx] = pq.top();
-            dur += (meet[1]-meet[0]);
-            pq.push({dur, idx});
+            auto [endTime, idx] = pq.top();
+            endTime += (meet[1]-meet[0]);
+            pq.push({endTime, idx});
             freq[idx]++;
             pq.pop();
         }
