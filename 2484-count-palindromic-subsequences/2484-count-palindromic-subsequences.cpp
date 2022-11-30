@@ -12,12 +12,10 @@ public:
         }
         int ret = 0;
         for (int i = 0; i < n - 3; ++i) {
-            for (int j = 0; j < 10; ++j)
-                cnt2[10 * (s[i] - '0') + j] += cnt[j];
+            for (int j = 0; j < 10; ++j) cnt2[10 * (s[i] - '0') + j] += cnt[j];
             ++cnt[s[i] - '0'];
             --rcnt[s[i + 1] - '0'];
-            for (int j = 0; j < 10; ++j)
-                rcnt2[10 * (s[i + 1] - '0') + j] -= rcnt[j];
+            for (int j = 0; j < 10; ++j) rcnt2[10 * (s[i + 1] - '0') + j] -= rcnt[j];
             for (int j = 0; j < 100; ++j) {
                 int64_t a = cnt2[j];
                 a *= rcnt2[j];
