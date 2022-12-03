@@ -24,7 +24,7 @@ public:
                         que.push_back(station);
                         vis.insert(station);
                     }
-                    routes[path].clear();
+                    routes[path].clear(); // not using gives TLE
                 }
             }
             rad++;
