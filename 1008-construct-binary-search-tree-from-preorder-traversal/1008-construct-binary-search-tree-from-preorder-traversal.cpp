@@ -11,21 +11,17 @@
  */
 class Solution {
 private:
-    TreeNode* constructor(vector<int>& pre, int si, int ei){
-        if(si>ei) return NULL;
-        TreeNode* root = new TreeNode(pre[si]);
-        int lei = si+1;
-        while(lei< size(pre) and pre[lei]<pre[si]) lei++;
-        lei--;
-        
-        int rsi = lei+1;
-        root->left = constructor(pre, si+1, lei);
-        root->right = constructor(pre, rsi, ei);
-        
+    int idx = 0;
+    TreeNode* constructor(vector<int>&pre, int lr, int rr){
+        if(idx>=size(pre) or pre[idx]<lr or pre[idx]>rr) return NULL;
+        TreeNode* root = new TreeNode(pre[idx++]);
+        root->left = constructor(pre, lr, pre[idx-1]);
+        root->right = constructor(pre, pre[idx-1], rr);
         return root;
     }
 public:
     TreeNode* bstFromPreorder(vector<int>& preorder) {
-        return constructor(preorder, 0, size(preorder)-1);
+        int n = size(preorder);
+        return constructor(preorder, -1e9, 1e9);
     }
 };
