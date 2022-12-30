@@ -25,6 +25,5 @@ public:
         // printThird() outputs "third". Do not change or remove this line.
         m2.lock();
         printThird();
-        m2.unlock();
     }
 };
