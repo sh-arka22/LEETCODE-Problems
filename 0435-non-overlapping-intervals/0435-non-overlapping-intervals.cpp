@@ -1,10 +1,11 @@
 class Solution {
 public:
+    //[-1,2],[-3,8],[6,10] imprtant test case
     int eraseOverlapIntervals(vector<vector<int>>& intervals) {
         auto cmp = [](vector<int>&a ,vector<int>&b){
             return a[1]<b[1];
         };
-        sort(begin(intervals), end(intervals), cmp);
+        sort(begin(intervals), end(intervals),cmp);
         int e = intervals[0][1];
         int n = size(intervals);
         int cnt = 0;
