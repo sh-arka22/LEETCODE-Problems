@@ -7,14 +7,9 @@ public:
         sort(begin(intervals), end(intervals), cmp);
         int e = intervals[0][1];
         int n = size(intervals);
-        for(auto v:intervals){
-            cout<<v[0]<<" -> "<<v[1]<<"] [";
-        }
-        cout<<endl;
         int cnt = 0;
         for(int i=1;i<n;i++){
             if(intervals[i][0]<e){
-                cout<<intervals[i][0]<<" -> "<<intervals[i][1]<<"] [";
                 cnt ++;
             }
             else{
