@@ -1,5 +1,6 @@
 class Solution {
 private:
+    //leetcode 435;
     int eraseOverlapIntervals(vector<vector<int>>& intervals) {
         auto cmp = [](vector<int>&a ,vector<int>&b){
             return a[1]<b[1];
@@ -19,7 +20,6 @@ private:
         return cnt;
     }
 public:
-    //leetcode 435;
     int findMinArrowShots(vector<vector<int>>& points) {
         return size(points) - eraseOverlapIntervals(points);
     }
