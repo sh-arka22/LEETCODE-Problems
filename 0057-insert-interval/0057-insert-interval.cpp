@@ -11,7 +11,7 @@ private:
     }
     vector<vector<int>> merge(vector<vector<int>>& intervals) {
         vector<vector<int>>ans;
-        sort(begin(intervals), end(intervals));
+        
         int n = size(intervals);
         ans.push_back(intervals[0]);
         for(int i=1; i<n; i++){
