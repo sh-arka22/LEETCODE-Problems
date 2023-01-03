@@ -23,7 +23,7 @@ public:
             else if(start == res.back()) {
                 res.push_back(end);
             }
-            else if(start > res[res.size() - 2]) {
+            else if(start < res.back() and start > res[res.size() - 2]) {
                 res.push_back(end);
             }
         }
