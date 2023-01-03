@@ -30,3 +30,13 @@ public:
         return res.size();
     }
 };
+/**
+This solution first sorts the intervals array using a custom compare function that compares the endpoints of the intervals. The intervals are sorted in ascending order by their endpoints, with ties broken by the startpoint of the interval.
+
+Then, the solution initializes an empty vector called res and adds the last two elements of the first interval to it. This ensures that we have at least two integers from the first interval in the res vector.
+
+The solution then iterates through the rest of the intervals and checks the startpoint of each interval. If the startpoint is after the last element of the res vector, the solution adds the last two elements of the interval to the res vector. If the startpoint is the same as the last element of the res vector, the solution only adds the last element of the interval to the res vector. If the startpoint is after the second to last element but before the last element of the res vector, the solution only adds the last element of the interval to the res vector.
+
+Finally, the solution returns the size of the res vector, which is the minimum size of a containing set.
+
+*/
