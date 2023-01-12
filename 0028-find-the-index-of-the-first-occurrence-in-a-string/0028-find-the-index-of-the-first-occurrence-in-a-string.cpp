@@ -1,6 +1,6 @@
 class Solution {
 private:
-    vector<int>kmp(string txt, string pat){
+    vector<int>kmp(string &txt, string &pat){
         //making of pi table
         int n = txt.size();
         int m = pat.size();
