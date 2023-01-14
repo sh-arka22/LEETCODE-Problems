@@ -1,47 +1,31 @@
 class Solution {
-private:
-    const static int MAXN = 100005;
-    int n;
-    int a[MAXN], c[MAXN];
-    int off = MAXN;
-    int ft[MAXN*2];
-
-    int lowbit(int x) {
-        return x & (-x);
-    }
-
-    void add(int x, int v) {
-        x += off;
-        while (x < MAXN*2) {
-            ft[x] += v;
-            x += lowbit(x);
+    #define BIT_SIZE 20001
+    #define BIT_OFFSET 10001
+    int bit[BIT_SIZE] = {0};
+    
+    inline void bitUpdate(int index) {
+        while (index < BIT_SIZE) {
+            bit[index]++;
+            index += index & -index;
         }
     }
-
-    int sum(int x) {
-        x += off;
-        int res = 0;
-        while (x > 0) {
-            res += ft[x];
-            x -= lowbit(x);
+    
+    inline int bitAns(int index) {
+        int result = 0;
+        while (index > 0) {
+            result += bit[index];
+            index -= index & -index;
         }
-        return res;
+        return result;
     }
+    
 public:
-    vector<int> countSmaller(vector<int>& nums) {
-        // ft.resize(MAXN, 0);
-        n = nums.size();
-        for (int i = 1; i <= n; i++) {
-            a[i] = nums[i-1];
+    vector<int> countSmaller(const vector<int>& nums) {
+        vector<int> result (nums.size());
+        for (int index = nums.size() - 1; index >= 0; --index) {
+            result[index] = bitAns(nums[index] + BIT_OFFSET - 1);
+            bitUpdate(nums[index] + BIT_OFFSET);
         }
-        for (int i = n; i >= 1; i--) {
-            c[i] = sum(a[i]-1);
-            add(a[i], 1);
-        }
-        vector<int>ans;
-        for (int i = 1; i <= n; i++) {
-            ans.push_back(c[i]);
-        }
-        return ans;
+        return result;
     }
 };
