@@ -99,53 +99,61 @@ struct Node
 
 
 class Solution{
-
-    public:
-    
-    int ans;
-    
-    void addValues(Node *root, int k) {
-        if(k < 0 || root == NULL)
-        return;
-        
-        ans += root->data;
-        addValues(root->left, k - 1);
-        addValues(root->right, k - 1);
+private:
+    void rootNodePath(Node* root, int tar, vector<Node*>&path){
+        if(!root) return;
+        if(root->data == tar){
+            path.push_back(root);
+            return;
+        }
+        rootNodePath(root->left, tar, path);
+        if(path.size()){
+            path.push_back(root);
+            return;
+        }
+        rootNodePath(root->right, tar, path);
+        if(path.size()){
+            path.push_back(root);
+            return;
+        }        
     }
-    
-    int dfs(Node *root, int home, int k) {
-        if(root == NULL)
-        return -1;
-        
-        if(root->data == home) {
-            addValues(root, k);
-            return k - 1;
+    void kDown(Node* root, Node* block, int k, vector<int>&res){
+        if(!root or root==block) return;
+        if(k==0){
+            res.push_back(root->data);
+            return;
         }
-        
-        int val1 = dfs(root->left, home, k);
-        int val2 = dfs(root->right, home, k);
-        
-        if(val1 >= 0) {
-            ans += root->data;
-            addValues(root->right, val1 - 1);
-            return val1 - 1;
-        }
-        
-        if(val2 >= 0) {
-            ans += root->data;
-            addValues(root->left, val2 - 1);
-            return val2 - 1;
-        }
-        return -1;
+        kDown(root->left, block, k-1, res);
+        kDown(root->right, block, k-1, res);
     }
+    vector<int> distanceK(Node* root, int target, int k) {
+        vector<Node*>path;
+        rootNodePath(root, target, path);
+        Node* block = NULL;
+        int i = 0;
+        vector<int>res;
+        for(auto node: path){
+            kDown(node, block, k-i, res);
+            block = node;
+            i++;
+        }
+        return res;
+    }
+public:
     int ladoos(Node* root, int home, int k) {
         // Your code goes here
-        ans = 0;
-        dfs(root, home, k);
-        return ans;
+        vector<vector<int>>ans;
+        for(int i=0;i<=k;i++){
+            ans.push_back(distanceK(root, home, i));
+        }
+        int tot = 0;
+        for(auto v: ans){
+            for(int it: v){
+                tot += it;
+            }
+        }
+        return tot;
     }
-
-
 };
 
 
