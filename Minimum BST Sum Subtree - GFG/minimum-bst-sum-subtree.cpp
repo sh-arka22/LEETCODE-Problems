@@ -84,8 +84,7 @@ public:
 
 class Solution {
 public:
-    int f(Node *root, int &minlen, int &sum, int target, bool &flag, int &maxi, int &mini)
-{
+int f(Node *root, int &minlen, int &sum, int target, bool &flag, int &maxi, int &mini) {
     if (root == NULL)
         return 0;
 
@@ -103,18 +102,16 @@ public:
     maxi = max(root->data, max(leftmaxi, rightmaxi));
     mini = min(root->data, min(leftmini, rightmini));
     flag = false;
-    if (root->data > leftmaxi && root->data < rightmini && leftflag && rightflag)
-    {
+    if (root->data > leftmaxi && root->data < rightmini && leftflag && rightflag) {
         flag = true; // current tree is also bst
     }
-    if (currLen < minlen && sum == target && flag)
-    {
+    if (currLen < minlen && sum == target && flag) {
+        sum = 0;
         minlen = currLen;
     }
     return currLen;
 }
-int minSubtreeSumBST(int target, Node *root)
-{
+int minSubtreeSumBST(int target, Node *root) {
     int sum = 0, minlen = 1e9, maxi = -1e9, mini = 1e9;
     bool flag = true;
     f(root, minlen, sum, target, flag, maxi, mini);
