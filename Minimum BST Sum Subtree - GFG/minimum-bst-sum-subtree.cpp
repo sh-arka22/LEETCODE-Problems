@@ -83,40 +83,27 @@ public:
 //User function Template for C++
 
 class Solution {
+private:
+    vector<int> dfs(Node* root, int target, int &ans) {
+        if (!root) return {1, 0, 0, (int)1e9, (int)-1e9};
+        auto left = dfs(root->left, target, ans);
+        auto right = dfs(root->right, target, ans);
+        if (left[0] == 1 && right[0] == 1 && root->data > left[4] && root->data < right[3]) {
+            int sum = left[2] + right[2] + root->data;
+            if (sum == target)
+                ans = min(ans, left[1] + right[1] + 1);
+            int len = left[1] + right[1] + 1;
+            return {1, len, sum, min(root->data,left[3]), max(root->data,right[4])};
+        }
+        return {0, 0, 0, (int)1e9, (int)-1e9};
+    }
 public:
-int f(Node *root, int &minlen, int &sum, int target, bool &flag, int &maxi, int &mini) {
-    if (root == NULL)
-        return 0;
-
-    // below subtrees sum,isbst,maxi,mini
-    int leftsum = 0, rightsum = 0;
-    bool leftflag = true, rightflag = true;
-    int leftmaxi = -1e9, rightmaxi = -1e9;
-    int leftmini = 1e9, rightmini = 1e9;
-
-    int leftlen = f(root->left, minlen, leftsum, target, leftflag, leftmaxi, leftmini);
-    int rightlen = f(root->right, minlen, rightsum, target, rightflag, rightmaxi, rightmini);
-
-    sum = root->data + leftsum + rightsum;
-    int currLen = leftlen + rightlen + 1;
-    maxi = max(root->data, max(leftmaxi, rightmaxi));
-    mini = min(root->data, min(leftmini, rightmini));
-    flag = false;
-    if (root->data > leftmaxi && root->data < rightmini && leftflag && rightflag) {
-        flag = true; // current tree is also bst
+    int minSubtreeSumBST(int target, Node *root) {
+        int ans = 1e9;
+        dfs(root, target, ans);
+        ans == 1e9 ? ans = -1 : 1;
+        return ans;
     }
-    if (currLen < minlen && sum == target && flag) {
-        sum = 0;
-        minlen = currLen;
-    }
-    return currLen;
-}
-int minSubtreeSumBST(int target, Node *root) {
-    int sum = 0, minlen = 1e9, maxi = -1e9, mini = 1e9;
-    bool flag = true;
-    f(root, minlen, sum, target, flag, maxi, mini);
-    return minlen == 1e9 ? -1 : minlen;
-}
 };
 
 //{ Driver Code Starts.
