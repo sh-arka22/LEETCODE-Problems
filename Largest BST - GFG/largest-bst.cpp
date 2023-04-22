@@ -110,7 +110,7 @@ class Solution{
             maxSize = max(maxSize, currBstSize);
             return {1, min(left[1], root->data), max(right[2], root->data), currBstSize};
         }
-        return {0, (int)1e9, (int)-1e9, 0};
+        return {0, 0, 0, 0};
     }
     int largestBst(Node *root) {
         //Your code here
